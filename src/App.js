@@ -1,10 +1,11 @@
 import React from 'react'
 import './App.css'
+import Bottom from './components/Bottom'
 
 function App() {
   return (
     <div className="App">
-      <h1>App</h1>
+      <Bottom />
     </div>
   )
 }
