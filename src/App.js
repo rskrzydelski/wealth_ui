@@ -39,7 +39,7 @@ class App extends Component {
             <Switch>
               <Route path='/login' render={ props => (<Login isAuthenticated={this.isAuthenticated} {...props}  /> )} />
               <Route path='/logout' render={ props => (<Logout isAuthenticated={this.isAuthenticated}/> )} />
-              <Route path='/register' component={Register} />
+              <Route path='/register' render={(props) => (<Register {...props}/>)} />
 
               <PrivateRoute exact path='/' isAuth={this.state.isAuth} component={Dashboard} />
               <PrivateRoute exact path='/gold' isAuth={this.state.isAuth} component={Gold} />

@@ -81,7 +81,7 @@ export default class Login extends Component {
 
     loginUser = (email, password) => {
       const { history } = this.props
-      Axios.post(loginUrl(), {email: email, password: password})
+      Axios.post(loginUrl, {email: email, password: password})
       .then((res) => {
           if (res.status === 200) {
             localStorage.setItem('access', res.data.access)
