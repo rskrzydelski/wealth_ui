@@ -50,7 +50,7 @@ function NavBar(props) {
             <StyledBrand>Wealthy app</StyledBrand>
           </Col>
           <Col size={3}>
-            <StyledLink to='/dashboard'>Dashboard</StyledLink>
+            <StyledLink to='/'>Dashboard</StyledLink>
             <StyledLink to='/gold'>Gold</StyledLink>
             <StyledLink to='/silver'>Silver</StyledLink>
             <StyledLink to='/cash'>Cash</StyledLink>
