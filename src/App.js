@@ -10,6 +10,20 @@ import Cash from './components/pages/Cash'
 import Login from './components/pages/Login'
 import Logout from './components/pages/Logout'
 import Register from './components/pages/Register'
+import styled from 'styled-components'
+
+const Grid = styled.div`
+
+`
+
+const Row = styled.div`
+  display: flex;
+`
+
+const Col = styled.div`
+  flex: ${(props) => props.size};
+`
+
 
 const PrivateRoute = ({ component: Component, isAuth }) => (
   <Route render={props => isAuth === true
@@ -33,6 +47,8 @@ class App extends Component {
   render () {
     return (
       <Router>
+        <Row>
+        <Col size={1}>
         <div className="App">
           <div>
             <NavBar isAuth={this.state.isAuth} />
@@ -49,6 +65,8 @@ class App extends Component {
             <Bottom />
           </div>
         </div>
+        </Col>
+        </Row>
       </Router>
     )
   }

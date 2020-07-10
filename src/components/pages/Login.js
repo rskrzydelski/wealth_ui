@@ -76,7 +76,6 @@ export default class Login extends Component {
       this.state = {
         credentials: { email: '', password: '' }
       }
-      console.log(this.state)
     }
 
     loginUser = (email, password) => {
