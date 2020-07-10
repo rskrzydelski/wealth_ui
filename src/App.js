@@ -8,6 +8,7 @@ import Gold from './components/pages/Gold'
 import Silver from './components/pages/Silver'
 import Cash from './components/pages/Cash'
 import Login from './components/pages/Login'
+import Logout from './components/pages/Logout'
 import Register from './components/pages/Register'
 
 const PrivateRoute = ({ component: Component, isAuth }) => (
@@ -18,21 +19,32 @@ const PrivateRoute = ({ component: Component, isAuth }) => (
 )
 
 class App extends Component {
+  state = {
+    isAuth: false
+  }
+  isAuthenticated = (isAuth) => {
+    if (isAuth) {
+      this.setState({isAuth: true})
+    } else {
+      this.setState({isAuth: false})
+    }
+  }
+
   render () {
-    const isAuth = false
     return (
       <Router>
         <div className="App">
           <div>
-            <NavBar isAuth={isAuth} />
+            <NavBar isAuth={this.state.isAuth} />
             <Switch>
-              <Route path='/login' component={Login} />
+              <Route path='/login' render={ props => (<Login isAuthenticated={this.isAuthenticated} {...props}  /> )} />
+              <Route path='/logout' render={ props => (<Logout isAuthenticated={this.isAuthenticated}/> )} />
               <Route path='/register' component={Register} />
 
-              <PrivateRoute exact path='/' isAuth={isAuth} component={Dashboard} />
-              <PrivateRoute exact path='/gold' isAuth={isAuth} component={Gold} />
-              <PrivateRoute exact path='/silver' isAuth={isAuth} component={Silver} />
-              <PrivateRoute exact path='/cash' isAuth={isAuth} component={Cash} />
+              <PrivateRoute exact path='/' isAuth={this.state.isAuth} component={Dashboard} />
+              <PrivateRoute exact path='/gold' isAuth={this.state.isAuth} component={Gold} />
+              <PrivateRoute exact path='/silver' isAuth={this.state.isAuth} component={Silver} />
+              <PrivateRoute exact path='/cash' isAuth={this.state.isAuth} component={Cash} />
             </Switch>
             <Bottom />
           </div>
