@@ -54,6 +54,7 @@ function NavBar(props) {
             <StyledLink to='/gold'>Gold</StyledLink>
             <StyledLink to='/silver'>Silver</StyledLink>
             <StyledLink to='/cash'>Cash</StyledLink>
+            <StyledLink to='/my_account'>My Account</StyledLink>
             <StyledLink to='/logout'>Logout</StyledLink>
           </Col>
         </Row>

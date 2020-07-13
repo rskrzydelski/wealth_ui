@@ -4,6 +4,7 @@ const apiEntry = '/api/v1/'
 // authentication endpoints
 export const loginUrl = `${serverUrl}${apiEntry}auth/jwt/create/`
 export const registerUrl = `${serverUrl}${apiEntry}auth/users/`
+export const accountUrl = `${serverUrl}${apiEntry}auth/users/me/`
 
 // market prices
 export const gold999ozUrl = `${serverUrl}${apiEntry}market?name=gold999&unit=oz`

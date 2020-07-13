@@ -10,6 +10,7 @@ import Cash from './components/pages/Cash'
 import Login from './components/pages/Login'
 import Logout from './components/pages/Logout'
 import Register from './components/pages/Register'
+import Account from './components/pages/Account'
 import styled from 'styled-components'
 
 const Row = styled.div`
@@ -57,6 +58,7 @@ class App extends Component {
               <PrivateRoute exact path='/gold' isAuth={this.state.isAuth} component={Gold} />
               <PrivateRoute exact path='/silver' isAuth={this.state.isAuth} component={Silver} />
               <PrivateRoute exact path='/cash' isAuth={this.state.isAuth} component={Cash} />
+              <PrivateRoute exact path='/my_account' isAuth={this.state.isAuth} component={Account} />
             </Switch>
             <Bottom />
           </div>
