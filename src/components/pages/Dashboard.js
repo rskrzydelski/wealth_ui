@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Axios from 'axios'
 import styled from 'styled-components'
 import Market from './Market'
 import {
@@ -12,9 +11,7 @@ import {
     walletUrl
 } from '../endpoints'
 
-const Grid = styled.div`
-
-`
+import { get } from '../api'
 
 const Row = styled.div`
   display: flex;
@@ -50,92 +47,79 @@ export default class Dashboard extends Component {
         silver800: {value: '', cash_spend: '', profit: ''}, my_cash: {my_currency: '', cash: ''},
         wallet: {title: '', my_fortune: ''}
     }
-    this.get(walletGold999Url)
-    this.get(walletGold585Url)
-    this.get(walletGold333Url)
-    this.get(walletSilver999Url)
-    this.get(walletSilver800Url)
-    this.get(walletCashUrl)
-    this.get(walletUrl)
+    this.getWalletData()
   }
 
-  setWalletData = (name, value, cash_spend, profit, my_currency, cash, title, my_fortune) => {
-    if (name === 'All gold999') {
-      var gold999 = {...this.state.gold999}
-      gold999.value = value
-      gold999.cash_spend = cash_spend
-      gold999.profit = profit
-      this.setState({gold999})
-    } else if (name === 'All gold585') {
-        var gold585 = {...this.state.gold585}
-        gold585.value = value
-        gold585.cash_spend = cash_spend
-        gold585.profit = profit
-        this.setState({gold585})
-    } else if (name === 'All gold333') {
-        var gold333 = {...this.state.gold333}
-        gold333.value = value
-        gold333.cash_spend = cash_spend
-        gold333.profit = profit
-        this.setState({gold333})
-    } else if (name === 'All silver999') {
-        var silver999 = {...this.state.silver999}
-        silver999.value = value
-        silver999.cash_spend = cash_spend
-        silver999.profit = profit
-        this.setState({silver999})
-    } else if (name === 'All silver800') {
-        var silver800 = {...this.state.silver800}
-        silver800.value = value
-        silver800.cash_spend = cash_spend
-        silver800.profit = profit
-        console.log(silver800)
-        this.setState({silver800})
-    } else if (cash !== undefined) {
-        var my_cash = {...this.state.cash}
-        my_cash.my_currency = my_currency
-        my_cash.cash = cash
-        this.setState({my_cash})
-    } else if (title === 'Summary of all assets value') {
-        var wallet = {...this.state.wallet}
-        wallet.title = title
-        wallet.my_fortune = my_fortune
-        this.setState({wallet})
-    }
-}
+  collectGold999Data = (data) => {
+    var gold999 = {...this.state.gold999}
+    gold999.value = data.metal_value
+    gold999.cash_spend = data.cash_spend
+    gold999.profit = data.profit
+    this.setState({gold999})
+  }
 
-  get = (url) => {
-    Axios.get(url, {
-        headers: {
-          authorization: 'JWT ' + localStorage.getItem('access')
-        }
-    })
-    .then((res) => {
-        if (res.status === 200) {
-            this.setWalletData(
-                res.data.name, 
-                res.data.metal_value, 
-                res.data.cash_spend, 
-                res.data.profit,
-                res.data.my_currency,
-                res.data.cash,
-                res.data.title,
-                res.data.my_fortune
-                )
-        } else {
-            console.log(res.status)
-        }
-    })
+  collectGold585Data = (data) => {
+    var gold585 = {...this.state.gold585}
+    gold585.value = data.metal_value
+    gold585.cash_spend = data.cash_spend
+    gold585.profit = data.profit
+    this.setState({gold585})
+  }
+
+  collectGold333Data = (data) => {
+    var gold333 = {...this.state.gold333}
+    gold333.value = data.metal_value
+    gold333.cash_spend = data.cash_spend
+    gold333.profit = data.profit
+    this.setState({gold333})
+  }
+
+  collectGold333Data = (data) => {
+    var gold333 = {...this.state.gold333}
+    gold333.value = data.metal_value
+    gold333.cash_spend = data.cash_spend
+    gold333.profit = data.profit
+    this.setState({gold333})
+  }
+
+  collectSilver999Data = (data) => {
+    var silver999 = {...this.state.silver999}
+    silver999.value = data.metal_value
+    silver999.cash_spend = data.cash_spend
+    silver999.profit = data.profit
+    this.setState({silver999})
+  }
+
+  collectSilver800Data = (data) => {
+    var silver800 = {...this.state.silver800}
+    silver800.value = data.metal_value
+    silver800.cash_spend = data.cash_spend
+    silver800.profit = data.profit
+    this.setState({silver800})
+  }
+
+  collectCashData = (data) => {
+    var my_cash = {...this.state.cash}
+    my_cash.my_currency = data.my_currency
+    my_cash.cash = data.cash
+    this.setState({my_cash})
+  }
+
+  collectFortune = (data) => {
+    var wallet = {...this.state.wallet}
+    wallet.title = data.title
+    wallet.my_fortune = data.my_fortune
+    this.setState({wallet})
   }
 
   getWalletData = () => {
-    this.get(walletGold999Url)
-    this.get(walletGold585Url)
-    this.get(walletGold333Url)
-    this.get(walletSilver999Url)
-    this.get(walletSilver800Url)
-    this.get(walletCashUrl)
-    this.get(walletUrl)
+      get(walletGold999Url, this.collectGold999Data)
+      get(walletGold585Url, this.collectGold585Data)
+      get(walletGold333Url, this.collectGold333Data)
+      get(walletSilver999Url, this.collectSilver999Data)
+      get(walletSilver800Url, this.collectSilver800Data)
+      get(walletCashUrl, this.collectCashData)
+      get(walletUrl, this.collectFortune)
   }
 
   componentDidMount () {

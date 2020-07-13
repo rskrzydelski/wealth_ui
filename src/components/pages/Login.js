@@ -1,12 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import Axios from 'axios'
 
 import { loginUrl } from '../endpoints'
-
-const Grid = styled.div`
-
-`
+import { post } from '../api'
 
 const Row = styled.div`
   display: flex;
@@ -78,20 +74,16 @@ export default class Login extends Component {
       }
     }
 
-    loginUser = (email, password) => {
+    Authenticate = (data) => {
       const { history } = this.props
-      Axios.post(loginUrl, {email: email, password: password})
-      .then((res) => {
-          if (res.status === 200) {
-            localStorage.setItem('access', res.data.access)
-            localStorage.setItem('refresh', res.data.refresh)
-            this.props.isAuthenticated(true)
-            history.push('/')
-          } else {
-              console.log(res.status)
-              localStorage.clear()
-          }
-      })
+      localStorage.setItem('access', data.access)
+      localStorage.setItem('refresh', data.refresh)
+      this.props.isAuthenticated(true)
+      history.push('/')
+    }
+
+    loginUser = (email, password) => {
+      post(loginUrl, {email: email, password: password}, this.Authenticate)
     }
 
     onSubmit = (value) => {

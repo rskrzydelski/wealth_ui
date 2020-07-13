@@ -1,17 +1,13 @@
 import React, { Component } from 'react'
-import Axios from 'axios'
 import styled from 'styled-components'
 
 import { gold999ozUrl, gold585gUrl, silver999ozUrl, silver800gUrl } from '../endpoints'
+import { get } from '../api'
 
 import gold_ico from '../../static/gold_ico.png'
 import gold585_ico from '../../static/gold_585_ico.png'
 import silver_ico from '../../static/silver_ico.png'
 import silver800_ico from '../../static/silver_800_ico.png'
-
-const Grid = styled.div`
-
-`
 
 const Row = styled.div`
   display: flex;
@@ -24,8 +20,6 @@ const Col = styled.div`
 const MarketContainer = styled.div`
   alignt-text: center;
   margin: 10px;
-  ${'' /* border-radius: 10px; */}
-  ${'' /* border: 1px solid gold; */}
   height: 50%;
 `
 const MarketText = styled.div`
@@ -48,46 +42,35 @@ export default class Market extends Component {
         this.getMarketData()
       }
 
-  setMetalprice = (name, unit, price) => {
-      if (name+unit === 'gold999oz') {
-        var market = {...this.state.market}
-        market.gold999oz = price;
-        this.setState({market})
-      } else if (name+unit === 'gold585g') {
-        var market = {...this.state.market}
-        market.gold585g = price;
-        this.setState({market})
-      } else if (name+unit === 'silver999oz') {
-        var market = {...this.state.market}
-        market.silver999oz = price;
-        this.setState({market})
-      } else if (name+unit === 'silver800g') {
-        var market = {...this.state.market}
-        market.silver800g = price;
-        this.setState({market})
-      }
+  collectMarketGold999 = (data) => {
+    var market = {...this.state.market}
+    market.gold999oz = data.price;
+    this.setState({market})
   }
 
-  get = (url) => {
-    Axios.get(url, {
-        headers: {
-          authorization: 'JWT ' + localStorage.getItem('access')
-        }
-    })
-    .then((res) => {
-        if (res.status === 200) {
-            this.setMetalprice(res.data.name, res.data.unit, res.data.price)
-        } else {
-            console.log(res.status)
-        }
-    })
+  collectMarketGold585 = (data) => {
+    var market = {...this.state.market}
+    market.gold585g = data.price;
+    this.setState({market})
+  }
+
+  collectMarketSilver999 = (data) => {
+    var market = {...this.state.market}
+    market.silver999oz = data.price;
+    this.setState({market})
+  }
+
+  collectMarketSilver800 = (data) => {
+    var market = {...this.state.market}
+    market.silver800g = data.price;
+    this.setState({market})
   }
 
   getMarketData = () => {
-    this.get(gold999ozUrl)
-    this.get(gold585gUrl)
-    this.get(silver999ozUrl)
-    this.get(silver800gUrl)
+    get(gold999ozUrl, this.collectMarketGold999)
+    get(gold585gUrl, this.collectMarketGold585)
+    get(silver999ozUrl, this.collectMarketSilver999)
+    get(silver800gUrl, this.collectMarketSilver800)
   }
 
   componentDidMount () {

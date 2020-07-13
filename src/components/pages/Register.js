@@ -1,12 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import Axios from 'axios'
 
 import { registerUrl } from '../endpoints'
-
-const Grid = styled.div`
-
-`
+import { post } from '../api'
 
 const Row = styled.div`
   display: flex;
@@ -79,17 +75,17 @@ export default class Logout extends Component {
       console.log(this.state)
     }
 
-    registerUser = (username, email, password, re_password, my_currency) => {
+    GoToLogin = (data) => {
       const { history } = this.props
-      console.log(registerUrl)
-      Axios.post(registerUrl, {username: username, email: email, password: password, re_password: re_password, my_currency: my_currency})
-      .then((res) => {
-        if (res.status === 201) {
-            history.push('/login')
-          } else {
-              console.log(res.status)
-          }
-      })
+      history.push('/login')
+    }
+
+    registerUser = (username, email, password, re_password, my_currency) => {
+      post(
+          registerUrl,
+          {username: username, email: email, password: password, re_password: re_password, my_currency: my_currency},
+          this.GoToLogin
+          )
     }
 
     onSubmit = (value) => {

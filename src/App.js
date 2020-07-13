@@ -12,10 +12,6 @@ import Logout from './components/pages/Logout'
 import Register from './components/pages/Register'
 import styled from 'styled-components'
 
-const Grid = styled.div`
-
-`
-
 const Row = styled.div`
   display: flex;
 `
