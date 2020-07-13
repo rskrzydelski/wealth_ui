@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-import { gold999ozUrl, gold585gUrl, silver999ozUrl, silver800gUrl } from '../endpoints'
+import { gold999ozUrl, gold585gUrl, silver999ozUrl, silver800gUrl, accountUrl } from '../endpoints'
 import { get } from '../api'
 
 import gold_ico from '../../static/gold_ico.png'
@@ -37,10 +37,20 @@ export default class Market extends Component {
                 gold585g: '',
                 silver999oz: '',
                 silver800g: ''
-            }
+            },
+            my_currency: ''
         }
         this.getMarketData()
+        get(accountUrl, this.getCurrency)
       }
+
+  getCurrency = (data) => {
+    if (data.my_currency === 'PLN') {
+      this.setState({my_currency: 'zł'})
+      } else if (data.my_currency === 'USD') {
+        this.setState({my_currency: '$'})
+      }
+  }
 
   collectMarketGold999 = (data) => {
     var market = {...this.state.market}
@@ -89,7 +99,7 @@ export default class Market extends Component {
           <MarketContainer>
             <Row>
               <Col size={2}>
-                <MarketText>Gold 999 oz: {this.state.market.gold999oz} zł</MarketText>
+                <MarketText>Gold 999 oz: {this.state.market.gold999oz} {this.state.my_currency}</MarketText>
               </Col>
               <Col size={1}>
                 <img src={gold_ico} alt='gold 999' style={{'max-width': '50%', height: 'auto'}} />
@@ -101,7 +111,7 @@ export default class Market extends Component {
           <MarketContainer>
             <Row>
               <Col size={2}>
-                <MarketText>Gold 585 g: {this.state.market.gold585g} zł</MarketText>
+                <MarketText>Gold 585 g: {this.state.market.gold585g} {this.state.my_currency}</MarketText>
               </Col>
               <Col size={1}>
                 <img src={gold585_ico} alt='gold 585' style={{'max-width': '30%', height: 'auto'}} />
@@ -113,7 +123,7 @@ export default class Market extends Component {
           <MarketContainer>
             <Row>
               <Col size={2}>
-                <MarketText>Silver 999 oz: {this.state.market.silver999oz} zł</MarketText>
+                <MarketText>Silver 999 oz: {this.state.market.silver999oz} {this.state.my_currency}</MarketText>
               </Col>
               <Col size={1}>
                 <img src={silver_ico} alt='silver 999' style={{'max-width': '40%', height: 'auto'}} />
@@ -125,7 +135,7 @@ export default class Market extends Component {
           <MarketContainer>
             <Row>
               <Col size={2}>
-                <MarketText>Silver 800 g: {this.state.market.silver800g} zł</MarketText>
+                <MarketText>Silver 800 g: {this.state.market.silver800g} {this.state.my_currency}</MarketText>
               </Col>
               <Col size={1}>
                 <img src={silver800_ico} alt='silver 800' style={{'max-width': '30%', height: 'auto'}} />

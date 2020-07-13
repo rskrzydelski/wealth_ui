@@ -8,7 +8,8 @@ import {
     walletSilver999Url,
     walletSilver800Url,
     walletCashUrl,
-    walletUrl
+    walletUrl,
+    accountUrl
 } from '../endpoints'
 
 import { get } from '../api'
@@ -45,9 +46,19 @@ export default class Dashboard extends Component {
         gold999: {value: '', cash_spend: '', profit: ''}, gold585: {value: '', cash_spend: '', profit: ''},
         gold333: {value: '', cash_spend: '', profit: ''}, silver999: {value: '', cash_spend: '', profit: ''},
         silver800: {value: '', cash_spend: '', profit: ''}, my_cash: {my_currency: '', cash: ''},
-        wallet: {title: '', my_fortune: ''}
+        wallet: {title: '', my_fortune: ''},
+        my_currency: ''
     }
     this.getWalletData()
+    get(accountUrl, this.getCurrency)
+  }
+
+  getCurrency = (data) => {
+    if (data.my_currency === 'PLN') {
+      this.setState({my_currency: 'zł'})
+    } else if (data.my_currency === 'USD') {
+      this.setState({my_currency: '$'})
+    }
   }
 
   collectGold999Data = (data) => {
@@ -142,11 +153,11 @@ export default class Dashboard extends Component {
                 <CardText>
                   Gold 999<br/>
                   <hr/>
-                  value {this.state.gold999.value}<br/>
-                  cash spend {this.state.gold999.cash_spend}<br/>
+                  value {this.state.gold999.value} {this.state.my_currency}<br/>
+                  cash spend {this.state.gold999.cash_spend} {this.state.my_currency}<br/>
                   {this.state.gold999.profit > 0 ? 
-                  <span style={{color: '#00ff00'}}>profit {this.state.gold999.profit}</span> :
-                  <span style={{color: 'red'}}>profit {this.state.gold999.profit}</span>
+                  <span style={{color: '#00ff00'}}>profit {this.state.gold999.profit} {this.state.my_currency}</span> :
+                  <span style={{color: 'red'}}>profit {this.state.gold999.profit} {this.state.my_currency}</span>
                   }
                 </CardText>
               </WallerCard>
@@ -156,11 +167,11 @@ export default class Dashboard extends Component {
               <CardText>
                 Gold 585<br/>
                 <hr/>
-                value {this.state.gold585.value}<br/>
-                cash spend {this.state.gold585.cash_spend}<br/>
+                value {this.state.gold585.value} {this.state.my_currency}<br/>
+                cash spend {this.state.gold585.cash_spend} {this.state.my_currency}<br/>
                 {this.state.gold585.profit > 0 ?
-                <span style={{color: '#00ff00'}}>profit {this.state.gold585.profit}</span> :
-                <span style={{color: 'red'}}>profit {this.state.gold585.profit}</span>
+                <span style={{color: '#00ff00'}}>profit {this.state.gold585.profit} {this.state.my_currency}</span> :
+                <span style={{color: 'red'}}>profit {this.state.gold585.profit} {this.state.my_currency}</span>
                 }
               </CardText>
             </WallerCard>        
@@ -170,8 +181,8 @@ export default class Dashboard extends Component {
                 <CardText>
                   Gold 333<br/>
                   <hr/>
-                  value {this.state.gold333.value}<br/>
-                  cash spend {this.state.gold333.cash_spend}<br/>
+                  value {this.state.gold333.value} {this.state.my_currency}<br/>
+                  cash spend {this.state.gold333.cash_spend} {this.state.my_currency}<br/>
                   {this.state.gold333.profit > 0 ?
                   <span style={{color: '#00ff00'}}>profit {this.state.gold333.profit}</span> :
                   <span style={{color: 'red'}}>profit {this.state.gold333.profit}</span>
@@ -186,11 +197,11 @@ export default class Dashboard extends Component {
                 <CardText>
                   Silver 800<br/>
                   <hr/>
-                  value {this.state.silver800.value}<br/>
-                  cash spend {this.state.silver800.cash_spend}<br/>
+                  value {this.state.silver800.value} {this.state.my_currency}<br/>
+                  cash spend {this.state.silver800.cash_spend} {this.state.my_currency}<br/>
                   {this.state.silver800.profit > 0 ?
-                  <span style={{color: '#00ff00'}}>profit {this.state.silver800.profit}</span> :
-                  <span style={{color: 'red'}}>profit {this.state.silver800.profit}</span>
+                  <span style={{color: '#00ff00'}}>profit {this.state.silver800.profit} {this.state.my_currency}</span> :
+                  <span style={{color: 'red'}}>profit {this.state.silver800.profit} {this.state.my_currency}</span>
                   }
                 </CardText>
               </WallerCard>
@@ -200,11 +211,11 @@ export default class Dashboard extends Component {
                 <CardText>
                   Silver 999<br/>
                   <hr/>
-                  value {this.state.silver999.value}<br/>
-                  cash spend {this.state.silver999.cash_spend}<br/>
+                  value {this.state.silver999.value} {this.state.my_currency}<br/>
+                  cash spend {this.state.silver999.cash_spend} {this.state.my_currency}<br/>
                   {this.state.silver999.profit > 0 ?
-                  <span style={{color: '#00ff00'}}>profit {this.state.silver999.profit}</span> :
-                  <span style={{color: 'red'}}>profit {this.state.silver999.profit}</span>
+                  <span style={{color: '#00ff00'}}>profit {this.state.silver999.profit} {this.state.my_currency}</span> :
+                  <span style={{color: 'red'}}>profit {this.state.silver999.profit} {this.state.my_currency}</span>
                   }
                 </CardText>
               </WallerCard>        
@@ -214,7 +225,7 @@ export default class Dashboard extends Component {
                 <CardText>
                   Cash<br/>
                   <hr/>
-                  <span style={{color: '#00ff00'}}>Cash {this.state.my_cash.cash} {this.state.my_cash.my_currency}</span>
+                  <span style={{color: '#00ff00'}}>Cash {this.state.my_cash.cash} {this.state.my_currency}</span>
                 </CardText>
               </WallerCard>
             </Col>
@@ -224,7 +235,7 @@ export default class Dashboard extends Component {
               <WallerCard>
                 <CardText>
                   Summary value of all resources<br/>
-                  <span style={{color: '#00ff00'}}>{this.state.wallet.my_fortune} PLN</span>
+                  <span style={{color: '#00ff00'}}>{this.state.wallet.my_fortune} {this.state.my_currency}</span>
                 </CardText>
               </WallerCard>
             </Col>
