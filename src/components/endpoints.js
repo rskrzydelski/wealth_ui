@@ -20,3 +20,12 @@ export const gold333kgUrl = `${serverUrl}${apiEntry}market?name=gold333&unit=kg`
 
 export const silver999ozUrl = `${serverUrl}${apiEntry}market?name=silver999&unit=oz`
 export const silver800gUrl = `${serverUrl}${apiEntry}market?name=silver800&unit=g`
+
+// wallet
+export const walletGold999Url = `${serverUrl}${apiEntry}wallet/metals/gold999`
+export const walletGold585Url = `${serverUrl}${apiEntry}wallet/metals/gold585`
+export const walletGold333Url = `${serverUrl}${apiEntry}wallet/metals/gold333`
+export const walletSilver999Url = `${serverUrl}${apiEntry}wallet/metals/silver999`
+export const walletSilver800Url = `${serverUrl}${apiEntry}wallet/metals/silver800`
+export const walletCashUrl = `${serverUrl}${apiEntry}wallet/cash`
+export const walletUrl = `${serverUrl}${apiEntry}wallet`
