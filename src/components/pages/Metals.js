@@ -48,7 +48,6 @@ const ListTitle = styled.h1`
 export default class Metals extends Component {
     constructor (props) {
       super(props)
-      console.log('aaa')
       this.state = {
           MetalList: [],
       }
