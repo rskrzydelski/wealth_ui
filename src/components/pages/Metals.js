@@ -35,8 +35,8 @@ const MetalItem = styled.div`
 
 const DelButton = styled.button`
   cursor: pointer;
-  border-radius: 50%;
   padding: 2px 5px;
+  border-radius: 10px;
   background: red;
 `
 
@@ -225,7 +225,7 @@ export default class Metals extends Component {
                     </p>
                     </Col>
                     <Col size={1}>
-                        <DelButton onClick={() => this.onSubmit(metal.id)}>X</DelButton>
+                        <DelButton onClick={() => this.onSubmit(metal.id)}>Delete</DelButton>
                     </Col>
                     </Row>
                   </MetalItem>

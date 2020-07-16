@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
+import cash from '../../static/franc.jpg'
+
 import { 
     cashUrl,
 
 } from '../endpoints'
-import { get, del } from '../api'
+import { get, del, postAuth } from '../api'
 
 const Row = styled.div`
   display: flex;
@@ -13,7 +15,6 @@ const Row = styled.div`
 
 const Col = styled.div`
   flex: ${(props) => props.size};
-  margin: auto;
 `
 
 const CashItem = styled.div`
@@ -29,8 +30,8 @@ const CashItem = styled.div`
 
 const DelButton = styled.button`
   cursor: pointer;
-  border-radius: 50%;
   padding: 2px 5px;
+  border-radius: 10px;
   background: red;
 `
 
@@ -41,11 +42,58 @@ const ListTitle = styled.h1`
   font-family: Courgette, cursive;
 `
 
+// form styles
+export const Form = styled.div`
+  border: 1px solid gold;
+  text-align: center;
+  border-radius: 14px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  margin-right: 10px;
+`
+
+export const Label = styled.label`
+  margin-top: 10px;
+  font-size: 14px;
+`
+
+export const TextInput = styled.input`
+  padding: 5px;
+  border-radius: 10px;
+  font-size: 12px;
+  background: #232632;
+  color: #d3d4d6;
+  width: 50%;
+  margin-top: 10px;
+  margin-right: 7px;
+  margin-bottom: 10px;
+  text-algin: center;
+`
+
+export const Button = styled.button`
+  background: #232632;
+  border-radius: 10px;
+  color: gold;
+  width: 30%;
+  height: 32px;
+  font-size: 0.9em;
+  margin: 10px auto;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid gold;
+  &:hover { background: black; }
+`
+
 export default class Cash extends Component {
     constructor (props) {
       super(props)
       this.state = {
           CashList: [],
+          cash: {
+            my_cash: '',
+            save_date: '',
+        },
       }
       get(cashUrl, this.AddToCashList)
     }
@@ -56,16 +104,33 @@ export default class Cash extends Component {
     }
 
     onDelete = () => {
+        this.setState({CashList: []})
         get(cashUrl, this.AddToCashList)
     }
 
     onSubmit = (id) => {
-      del(cashUrl + id, this.onDelete)
+      del(cashUrl + '/' + id, this.onDelete)
+    }
+
+    onSubmitAdd = () => {
+        postAuth(cashUrl, this.state.cash, this.onAdd)
+    }
+
+    onAdd = () => {
+        this.setState({CashList: []})
+        get(cashUrl, this.AddToCashList)
+    }
+
+    handleChange = (event) => {
+        const res = this.state.cash
+        res[event.target.name] = event.target.value
+        this.setState({ cash: res })
     }
 
     render() {
         return (
-            <div>
+            <Row>
+            <Col size={2}>
                 <ListTitle>List of your cash:</ListTitle>
                 {this.state.CashList.map((cash) => (
                   <CashItem>
@@ -77,12 +142,42 @@ export default class Cash extends Component {
                     </p>
                     </Col>
                     <Col size={1}>
-                        <DelButton onClick={() => this.onSubmit(cash.id)}>X</DelButton>
+                        <DelButton onClick={() => this.onSubmit(cash.id)}>Delete</DelButton>
                     </Col>
                     </Row>
                   </CashItem>
                 ))}
-            </div>
+                </Col>
+            <Col size={3}>
+                <ListTitle>Add new cash</ListTitle>
+                <Form>
+                    <Label>
+                      <TextInput
+                        type='number'
+                        name='my_cash'
+                        placeholder='my cash'
+                        min="1"
+                        onChange={this.handleChange}
+                      />
+                    </Label>
+                    <br />
+                    <Label>
+                      <TextInput
+                        type='date'
+                        name='save_date'
+                        placeholder='save date'
+                        value={this.state.cash.save_date}
+                        onChange={this.handleChange}
+                      />
+                    </Label>
+                    <br />
+                    <Button onClick={() => this.onSubmitAdd(this.state)}>Add</Button>
+                  </Form>
+                  </Col>
+                  <Col size={4}>
+                    <img src={cash} alt='cash' style={{'max-width': '50%', height: 'auto', margin: '50px'}} />
+                  </Col>
+            </Row>
         )
     }
 }
