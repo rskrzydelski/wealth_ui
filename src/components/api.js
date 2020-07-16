@@ -26,6 +26,22 @@ export const post = (url, data, callback) => {
     })
 }
 
+export const postAuth = (url, data, callback) => {
+  Axios.post(url, data, {
+    headers: {
+      authorization: 'JWT ' + localStorage.getItem('access')
+    }
+  })
+    .then((res) => {
+      if (res.status === 200 || res.status === 201) {
+        callback(res.data)
+      } else {
+        console.log(res.status)
+      }
+    })
+}
+
+
 export const del = (url, callback) => {
   Axios.delete(url, {
     headers: {

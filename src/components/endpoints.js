@@ -32,7 +32,7 @@ export const walletCashUrl = `${serverUrl}${apiEntry}wallet/cash`
 export const walletUrl = `${serverUrl}${apiEntry}wallet`
 
 // resources
-export const metalsUrl = `${serverUrl}${apiEntry}resources/metals/`
+export const metalsUrl = `${serverUrl}${apiEntry}resources/metals`
 export const metalsGold999Url = `${serverUrl}${apiEntry}resources/metals?name=gold999`
 export const metalsGold585Url = `${serverUrl}${apiEntry}resources/metals?name=gold585`
 export const metalsGold333Url = `${serverUrl}${apiEntry}resources/metals?name=gold333`
