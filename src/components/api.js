@@ -25,3 +25,18 @@ export const post = (url, data, callback) => {
       }
     })
 }
+
+export const del = (url, callback) => {
+  Axios.delete(url, {
+    headers: {
+      authorization: 'JWT ' + localStorage.getItem('access')
+    }
+  })
+    .then((res) => {
+      if (res.status === 204) {
+        callback()
+      } else {
+        console.log(res.status)
+      }
+    })
+}

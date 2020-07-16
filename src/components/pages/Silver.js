@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
+import Metals from './Metals'
 
 export default class Silver extends Component {
-    render() {
-        return (
-            <div>
-                <p>Silver</p>
-            </div>
-        )
-    }
+  render() {
+    return (
+      <Metals resource='silver' />
+    )
+  }
 }

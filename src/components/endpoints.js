@@ -30,3 +30,13 @@ export const walletSilver999Url = `${serverUrl}${apiEntry}wallet/metals/silver99
 export const walletSilver800Url = `${serverUrl}${apiEntry}wallet/metals/silver800`
 export const walletCashUrl = `${serverUrl}${apiEntry}wallet/cash`
 export const walletUrl = `${serverUrl}${apiEntry}wallet`
+
+// resources
+export const metalsUrl = `${serverUrl}${apiEntry}resources/metals/`
+export const metalsGold999Url = `${serverUrl}${apiEntry}resources/metals?name=gold999`
+export const metalsGold585Url = `${serverUrl}${apiEntry}resources/metals?name=gold585`
+export const metalsGold333Url = `${serverUrl}${apiEntry}resources/metals?name=gold333`
+export const metalsSilver999Url = `${serverUrl}${apiEntry}resources/metals?name=silver999`
+export const metalsSilver800Url = `${serverUrl}${apiEntry}resources/metals?name=silver800`
+export const metalsCashUrl = `${serverUrl}${apiEntry}resources/cash`
+
