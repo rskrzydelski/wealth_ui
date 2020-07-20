@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import Axios from 'axios'
 import gold_img from '../../static/gold_bars.jpg'
 import silver_img from '../../static/silver_bars.jpg'
 
@@ -12,7 +13,6 @@ import {
     metalsSilver800Url,
     accountUrl
 } from '../endpoints'
-import { get, del, postAuth } from '../api'
 
 const Row = styled.div`
   display: flex;
@@ -140,52 +140,70 @@ export default class Metals extends Component {
               description: ''
           },
       }
-      this.collectMetals(this.props.resource)
-      get(accountUrl, this.getCurrency)
     }
 
-    getCurrency = (data) => {
-        const res = this.state.resource
-        res['bought_price_currency'] = data.my_currency
-        this.setState({ resource: res })
+    componentDidMount () {
+        this.collectMetals(this.props.resource)
+        this.getCurrency()
+    }
+
+    getCurrency = async () => {
+        try {
+            const res = await Axios.get(accountUrl, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
+            const resource = this.state.resource
+            resource['bought_price_currency'] = res.data.my_currency
+            this.setState({resource})
+        } catch (error) {
+    
+        }
       }
 
-    collectMetals = (resource) => {
+    collectMetals = async (resource) => {
+      try {
         if (resource === 'gold') {
-            get(metalsGold999Url, this.AddToMetalList)
-            get(metalsGold585Url, this.AddToMetalList)
-            get(metalsGold333Url, this.AddToMetalList)
-    
+            const metalsGold999Promise = Axios(metalsGold999Url, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
+            const metalsGold585Promise = Axios(metalsGold585Url, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
+            const metalsGold333Promise = Axios(metalsGold333Url, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
+            
+            const res = await Promise.all([metalsGold999Promise, metalsGold585Promise, metalsGold333Promise])
+            const MetalList = [...this.state.MetalList, ...res[0].data, ...res[1].data, ...res[2].data]
+            this.setState({MetalList})
         } else if (resource === 'silver') {
-            get(metalsSilver999Url, this.AddToMetalList)
-            get(metalsSilver800Url, this.AddToMetalList)
+            const metalsSilver999Promise = Axios(metalsSilver999Url, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
+            const metalsSilver800Promise = Axios(metalsSilver800Url, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
+            
+            const res = await Promise.all([metalsSilver999Promise, metalsSilver800Promise])
+            const MetalList = [...this.state.MetalList, ...res[0].data, ...res[1].data]
+            this.setState({MetalList})
+        }
+        } catch (error) {
+          console.error(error)
         }
     }
 
-    AddToMetalList = (data) => {
-        const MetalList = [...this.state.MetalList, ...data]
-        this.setState({MetalList})
+    onSubmitDel = async (e, id) => {
+        e.preventDefault()
+        try {
+            const res = await Axios.delete(metalsUrl + '/' + id, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
+            this.setState({MetalList: []})
+            this.collectMetals(this.props.resource)
+        } catch (error) {
+          console.log(error)
+        }
+      }
+
+    onSubmitAdd = async (e) => {
+        e.preventDefault()
+        try {
+            const res = await Axios.post(metalsUrl, this.state.resource, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
+            this.setState({MetalList: []})
+            this.collectMetals(this.props.resource)
+        } catch (error) {
+          console.log(error)
+        }
     }
 
-    onDelete = () => {
-        this.setState({MetalList: []})
-        this.collectMetals(this.props.resource)
-    }
-
-    onSubmit = (id) => {
-      del(metalsUrl + '/' + id, this.onDelete, )
-    }
-
-    onSubmitAdd = () => {
-        postAuth(metalsUrl, this.state.resource, this.onAdd)
-    }
-
-    onAdd = () => {
-        this.setState({MetalList: []})
-        this.collectMetals(this.props.resource)
-    }
-
-    handleChange = (event) => {
+    handleFormInput = (event) => {
         const res = this.state.resource
         res[event.target.name] = event.target.value
         this.setState({ resource: res })
@@ -225,7 +243,7 @@ export default class Metals extends Component {
                     </p>
                     </Col>
                     <Col size={1}>
-                        <DelButton onClick={() => this.onSubmit(metal.id)}>Delete</DelButton>
+                        <DelButton onClick={(e) => this.onSubmitDel(e, metal.id)}>Delete</DelButton>
                     </Col>
                     </Row>
                   </MetalItem>
@@ -235,7 +253,7 @@ export default class Metals extends Component {
                 <ListTitle>Add new metal</ListTitle>
                 <Form>
                     <Label>
-                      <Select id="resource_name" name="name" onChange={this.handleChange}>
+                      <Select id="resource_name" name="name" onChange={this.handleFormInput}>
                         {options}
                       </Select>
                     </Label>
@@ -246,7 +264,7 @@ export default class Metals extends Component {
                         name='bought_price'
                         placeholder='bought price'
                         min="1"
-                        onChange={this.handleChange}
+                        onChange={this.handleFormInput}
                       />
                     </Label>
                     <br />
@@ -256,12 +274,12 @@ export default class Metals extends Component {
                         name='amount'
                         placeholder='amount'
                         min="1"
-                        onChange={this.handleChange}
+                        onChange={this.handleFormInput}
                       />
                     </Label>
                     <br />
                     <Label>
-                    <Select id="resource_unit" name="unit" onChange={this.handleChange}>
+                    <Select id="resource_unit" name="unit" onChange={this.handleFormInput}>
                         <option value="oz">ounce</option>
                         <option value="g">gram</option>
                         <option value="kg">kilogram</option>
@@ -274,7 +292,7 @@ export default class Metals extends Component {
                         name='date_of_bought'
                         placeholder='date of bought'
                         value={this.state.resource.date_of_bought}
-                        onChange={this.handleChange}
+                        onChange={this.handleFormInput}
                       />
                     </Label>
                     <br />
@@ -283,13 +301,13 @@ export default class Metals extends Component {
                         name="description"
                         rows="4"
                         cols="50"
-                        onChange={this.handleChange}
+                        onChange={this.handleFormInput}
                       >
                         description
                       </TextArea>
                     </Label>
                     <br />
-                    <Button onClick={() => this.onSubmitAdd(this.state)}>Add</Button>
+                    <Button onClick={(e) => this.onSubmitAdd(e, this.state)}>Add</Button>
                   </Form>
                   </Col>
                   <Col size={4}>
