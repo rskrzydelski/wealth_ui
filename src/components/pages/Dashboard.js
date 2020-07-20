@@ -32,6 +32,9 @@ const WallerCard = styled.div`
   padding: 10px;
   border-radius: 10px;
   border: 1px solid gold;
+  &:hover {
+      background: black;
+  }
 `
 
 const CardText = styled.div`
@@ -218,7 +221,10 @@ export default class Dashboard extends Component {
                 <CardText>
                   Cash<br/>
                   <hr/>
-                  <span style={{color: '#00ff00'}}>Cash {this.state.my_cash.cash} {this.state.my_currency}</span>
+                  {this.state.my_cash.cash > 0 ?
+                  <span style={{color: '#00ff00'}}>Cash {this.state.my_cash.cash} {this.state.my_currency}</span> :
+                  <span style={{color: 'red'}}>Cash {this.state.my_cash.cash} {this.state.my_currency}</span>
+                  }
                 </CardText>
               </WallerCard>
             </Col>
@@ -228,7 +234,10 @@ export default class Dashboard extends Component {
               <WallerCard>
                 <CardText>
                   Summary value of all resources<br/>
-                  <span style={{color: '#00ff00'}}>{this.state.wallet.my_fortune} {this.state.my_currency}</span>
+                  {this.state.wallet.my_fortune > 0 ?
+                  <span style={{color: '#00ff00'}}>{this.state.wallet.my_fortune} {this.state.my_currency}</span> :
+                  <span style={{color: 'red'}}>{this.state.wallet.my_fortune} {this.state.my_currency}</span>
+                  }
                 </CardText>
               </WallerCard>
             </Col>
