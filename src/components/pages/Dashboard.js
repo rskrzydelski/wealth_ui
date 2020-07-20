@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import Axios from 'axios'
 import Market from './Market'
 import {
     walletGold999Url,
@@ -11,8 +12,6 @@ import {
     walletUrl,
     accountUrl
 } from '../endpoints'
-
-import { get } from '../api'
 
 const Row = styled.div`
   display: flex;
@@ -49,91 +48,80 @@ export default class Dashboard extends Component {
         wallet: {title: '', my_fortune: ''},
         my_currency: ''
     }
-    this.getWalletData()
-    get(accountUrl, this.getCurrency)
   }
 
-  getCurrency = (data) => {
-    if (data.my_currency === 'PLN') {
-      this.setState({my_currency: 'zł'})
-    } else if (data.my_currency === 'USD') {
-      this.setState({my_currency: '$'})
+  getCurrency = async () => {
+    try {
+        const res = await Axios.get(accountUrl, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
+        if (res.data.my_currency === 'PLN') {
+          this.setState({my_currency: 'zł'})
+        } else if (res.data.my_currency === 'USD') {
+          this.setState({my_currency: '$'})
+      }
+    } catch (error) {
+
     }
   }
 
-  collectGold999Data = (data) => {
-    var gold999 = {...this.state.gold999}
-    gold999.value = data.metal_value
-    gold999.cash_spend = data.cash_spend
-    gold999.profit = data.profit
-    this.setState({gold999})
-  }
+  getWalletData = async () => {
+    try {
+      const gold999WalletPromise = Axios(walletGold999Url, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
+      const gold585WalletPromise = Axios(walletGold585Url, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
+      const gold333WalletPromise = Axios(walletGold333Url, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
+      const silver999WalletPromise = Axios(walletSilver999Url, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
+      const silver800WalletPromise = Axios(walletSilver800Url, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
+      const cashWalletPromise = Axios(walletCashUrl, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
+      const walletPromise = Axios(walletUrl, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
 
-  collectGold585Data = (data) => {
-    var gold585 = {...this.state.gold585}
-    gold585.value = data.metal_value
-    gold585.cash_spend = data.cash_spend
-    gold585.profit = data.profit
-    this.setState({gold585})
-  }
+      const res = await Promise.all([gold999WalletPromise, gold585WalletPromise, gold333WalletPromise, silver999WalletPromise, silver800WalletPromise, cashWalletPromise, walletPromise])
 
-  collectGold333Data = (data) => {
-    var gold333 = {...this.state.gold333}
-    gold333.value = data.metal_value
-    gold333.cash_spend = data.cash_spend
-    gold333.profit = data.profit
-    this.setState({gold333})
-  }
+      var gold999 = {...this.state.gold999}
+      gold999.value = res[0].data.metal_value
+      gold999.cash_spend = res[0].data.cash_spend
+      gold999.profit = res[0].data.profit
+      this.setState({gold999})
 
-  collectGold333Data = (data) => {
-    var gold333 = {...this.state.gold333}
-    gold333.value = data.metal_value
-    gold333.cash_spend = data.cash_spend
-    gold333.profit = data.profit
-    this.setState({gold333})
-  }
+      var gold585 = {...this.state.gold585}
+      gold585.value = res[1].data.metal_value
+      gold585.cash_spend = res[1].data.cash_spend
+      gold585.profit = res[1].data.profit
+      this.setState({gold585})
 
-  collectSilver999Data = (data) => {
-    var silver999 = {...this.state.silver999}
-    silver999.value = data.metal_value
-    silver999.cash_spend = data.cash_spend
-    silver999.profit = data.profit
-    this.setState({silver999})
-  }
+      var gold333 = {...this.state.gold333}
+      gold333.value = res[2].data.metal_value
+      gold333.cash_spend = res[2].data.cash_spend
+      gold333.profit = res[2].data.profit
+      this.setState({gold333})
 
-  collectSilver800Data = (data) => {
-    var silver800 = {...this.state.silver800}
-    silver800.value = data.metal_value
-    silver800.cash_spend = data.cash_spend
-    silver800.profit = data.profit
-    this.setState({silver800})
-  }
+      var silver999 = {...this.state.silver999}
+      silver999.value = res[3].data.metal_value
+      silver999.cash_spend = res[3].data.cash_spend
+      silver999.profit = res[3].data.profit
+      this.setState({silver999})
 
-  collectCashData = (data) => {
-    var my_cash = {...this.state.cash}
-    my_cash.my_currency = data.my_currency
-    my_cash.cash = data.cash
-    this.setState({my_cash})
-  }
+      var silver800 = {...this.state.silver800}
+      silver800.value = res[4].data.metal_value
+      silver800.cash_spend = res[4].data.cash_spend
+      silver800.profit = res[4].data.profit
+      this.setState({silver800})
 
-  collectFortune = (data) => {
-    var wallet = {...this.state.wallet}
-    wallet.title = data.title
-    wallet.my_fortune = data.my_fortune
-    this.setState({wallet})
-  }
+      var my_cash = {...this.state.cash}
+      my_cash.my_currency = res[5].data.my_currency
+      my_cash.cash = res[5].data.cash
+      this.setState({my_cash})
 
-  getWalletData = () => {
-      get(walletGold999Url, this.collectGold999Data)
-      get(walletGold585Url, this.collectGold585Data)
-      get(walletGold333Url, this.collectGold333Data)
-      get(walletSilver999Url, this.collectSilver999Data)
-      get(walletSilver800Url, this.collectSilver800Data)
-      get(walletCashUrl, this.collectCashData)
-      get(walletUrl, this.collectFortune)
+      var wallet = {...this.state.wallet}
+      wallet.title = res[6].data.title
+      wallet.my_fortune = res[6].data.my_fortune
+      this.setState({wallet})
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   componentDidMount () {
+    this.getWalletData()
+    this.getCurrency()
     const timer = 100 * 1000
     this.myInterval = setInterval(this.getWalletData, timer)
   }
