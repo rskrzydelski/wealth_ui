@@ -10,7 +10,8 @@ import {
     walletSilver800Url,
     walletCashUrl,
     walletUrl,
-    accountUrl
+    accountUrl,
+    refreshTokenUrl
 } from '../endpoints'
 
 const Row = styled.div`
@@ -115,7 +116,11 @@ export default class Dashboard extends Component {
       wallet.my_fortune = res[6].data.my_fortune
       this.setState({wallet})
     } catch (error) {
-      console.error(error)
+      if (error.response.status === 401) {
+        const res = await Axios.post(refreshTokenUrl, {refresh: localStorage.getItem('refresh')})
+        localStorage.setItem('access', res.data.access)
+        this.getWalletData()
+      }
     }
   }
 

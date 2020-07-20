@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Axios from 'axios'
 
-import { gold999ozUrl, gold585gUrl, silver999ozUrl, silver800gUrl, accountUrl } from '../endpoints'
+import { gold999ozUrl, gold585gUrl, silver999ozUrl, silver800gUrl, accountUrl, refreshTokenUrl } from '../endpoints'
 
 import gold_ico from '../../static/gold_ico.png'
 import gold585_ico from '../../static/gold_585_ico.png'
@@ -70,7 +70,12 @@ export default class Market extends Component {
       market.silver800g = res[3].data.price
       this.setState({market})
     } catch (error) {
-      console.error(error)
+      console.log(error)
+      if (error.response.status === 401) {
+        const res = await Axios.post(refreshTokenUrl, {refresh: localStorage.getItem('refresh')})
+        localStorage.setItem('access', res.data.access)
+        this.getMarketData()
+      } 
     }
   }
 

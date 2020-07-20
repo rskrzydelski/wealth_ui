@@ -3,6 +3,7 @@ const apiEntry = '/api/v1/'
 
 // authentication endpoints
 export const loginUrl = `${serverUrl}${apiEntry}auth/jwt/create/`
+export const refreshTokenUrl = `${serverUrl}${apiEntry}auth/jwt/refresh/`
 export const registerUrl = `${serverUrl}${apiEntry}auth/users/`
 export const accountUrl = `${serverUrl}${apiEntry}auth/users/me/`
 

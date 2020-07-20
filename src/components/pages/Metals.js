@@ -11,7 +11,8 @@ import {
     metalsGold333Url,
     metalsSilver999Url,
     metalsSilver800Url,
-    accountUrl
+    accountUrl,
+    refreshTokenUrl
 } from '../endpoints'
 
 const Row = styled.div`
@@ -154,7 +155,11 @@ export default class Metals extends Component {
             resource['bought_price_currency'] = res.data.my_currency
             this.setState({resource})
         } catch (error) {
-    
+            if (error.response.status === 401) {
+                const res = await Axios.post(refreshTokenUrl, {refresh: localStorage.getItem('refresh')})
+                localStorage.setItem('access', res.data.access)
+                this.getCurrency()
+              }
         }
       }
 
@@ -177,7 +182,11 @@ export default class Metals extends Component {
             this.setState({MetalList})
         }
         } catch (error) {
-          console.error(error)
+            if (error.response.status === 401) {
+                const res = await Axios.post(refreshTokenUrl, {refresh: localStorage.getItem('refresh')})
+                localStorage.setItem('access', res.data.access)
+                this.collectMetals(resource)
+              }
         }
     }
 
@@ -188,7 +197,11 @@ export default class Metals extends Component {
             this.setState({MetalList: []})
             this.collectMetals(this.props.resource)
         } catch (error) {
-          console.log(error)
+            if (error.response.status === 401) {
+                const res = await Axios.post(refreshTokenUrl, {refresh: localStorage.getItem('refresh')})
+                localStorage.setItem('access', res.data.access)
+                this.onSubmitDel(e, id)
+              }
         }
       }
 
@@ -199,7 +212,11 @@ export default class Metals extends Component {
             this.setState({MetalList: []})
             this.collectMetals(this.props.resource)
         } catch (error) {
-          console.log(error)
+            if (error.response.status === 401) {
+                const res = await Axios.post(refreshTokenUrl, {refresh: localStorage.getItem('refresh')})
+                localStorage.setItem('access', res.data.access)
+                this.onSubmitAdd(e)
+              }
         }
     }
 
