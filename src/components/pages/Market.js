@@ -49,7 +49,11 @@ export default class Market extends Component {
           this.setState({my_currency: 'zł'})
         } else if (res.data.my_currency === 'USD') {
           this.setState({my_currency: '$'})
-      }
+        } else if (res.data.my_currency === 'EUR') {
+          this.setState({my_currency: '€'})
+        } else if (res.data.my_currency === 'CHF') {
+          this.setState({my_currency: 'chf'})
+        }
     } catch (error) {
 
     }

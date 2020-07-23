@@ -140,6 +140,7 @@ export default class Metals extends Component {
               date_of_bought: '',
               description: ''
           },
+          my_currency: '',
       }
     }
 
@@ -151,9 +152,18 @@ export default class Metals extends Component {
     getCurrency = async () => {
         try {
             const res = await Axios.get(accountUrl, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
-            const resource = this.state.resource
-            resource['bought_price_currency'] = res.data.my_currency
-            this.setState({resource})
+            const state = this.state
+            state.resource['bought_price_currency'] = res.data.my_currency
+            if (res.data.my_currency === 'PLN') {
+              state.my_currency = 'zł'
+            } else if (res.data.my_currency === 'USD') {
+              state.my_currency = '$'
+            } else if (res.data.my_currency === 'EUR') {
+              state.my_currency = '€'
+            } else if (res.data.my_currency === 'CHF') {
+              state.my_currency = 'chf'
+            }
+            this.setState({state})
         } catch (error) {
             if (error.response.status === 401) {
                 const res = await Axios.post(refreshTokenUrl, {refresh: localStorage.getItem('refresh')})
@@ -255,7 +265,7 @@ export default class Metals extends Component {
                     <p style={{margin: '5px'}}>
                       {metal.name}<br/>
                       Amount: {metal.amount} {metal.unit}<br/>
-                      Bought price: {metal.bought_price}<br/>
+                      Bought price: {metal.bought_price} {this.state.my_currency}<br/>
                       Date of bought: {metal.date_of_bought.slice(0, 10)}
                     </p>
                     </Col>

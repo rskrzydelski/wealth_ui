@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import Axios from 'axios'
 
 import cash from '../../static/franc.jpg'
 
 import { 
     cashUrl,
-
+    accountUrl,
+    refreshTokenUrl
 } from '../endpoints'
 import { get, del, postAuth } from '../api'
 
@@ -94,34 +96,78 @@ export default class Cash extends Component {
             my_cash: '',
             save_date: '',
         },
+        my_currency: '',
       }
-      get(cashUrl, this.AddToCashList)
     }
 
-    AddToCashList = (data) => {
-        const CashList = [...this.state.CashList, ...data]
-        this.setState({CashList})
+    componentDidMount () {
+      this.getCurrency()
+      this.collectCash()
     }
 
-    onDelete = () => {
-        this.setState({CashList: []})
-        get(cashUrl, this.AddToCashList)
+    getCurrency = async () => {
+      try {
+          const res = await Axios.get(accountUrl, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
+          if (res.data.my_currency === 'PLN') {
+            this.setState({my_currency: 'zł'})
+          } else if (res.data.my_currency === 'USD') {
+            this.setState({my_currency: '$'})
+          } else if (res.data.my_currency === 'EUR') {
+            this.setState({my_currency: '€'})
+          } else if (res.data.my_currency === 'CHF') {
+            this.setState({my_currency: 'chf'})
+          }
+      } catch (error) {  
+      }
     }
 
-    onSubmit = (id) => {
-      del(cashUrl + '/' + id, this.onDelete)
+    collectCash = async () => {
+      try {
+            const res = await Axios.get(cashUrl, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
+            console.log(res)
+            const CashList = [...this.state.CashList, ...res.data]
+            this.setState({CashList})
+        } catch (error) {
+            if (error.response.status === 401) {
+                const res = await Axios.post(refreshTokenUrl, {refresh: localStorage.getItem('refresh')})
+                localStorage.setItem('access', res.data.access)
+                this.collectCash()
+              }
+        }
     }
 
-    onSubmitAdd = () => {
-        postAuth(cashUrl, this.state.cash, this.onAdd)
+    onSubmitDel = async (e, id) => {
+      e.preventDefault()
+      try {
+          await Axios.delete(cashUrl + '/' + id, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
+          this.setState({CashList: []})
+          this.collectCash()
+      } catch (error) {
+          if (error.response.status === 401) {
+              const res = await Axios.post(refreshTokenUrl, {refresh: localStorage.getItem('refresh')})
+              localStorage.setItem('access', res.data.access)
+              this.onSubmitDel(e, id)
+            }
+      }
     }
 
-    onAdd = () => {
-        this.setState({CashList: []})
-        get(cashUrl, this.AddToCashList)
-    }
+  onSubmitAdd = async (e) => {
+      e.preventDefault()
+      try {
+          await Axios.post(cashUrl, this.state.cash, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
+          this.setState({CashList: []})
+          this.collectCash()
+      } catch (error) {
+          if (error.response.status === 401) {
+              const res = await Axios.post(refreshTokenUrl, {refresh: localStorage.getItem('refresh')})
+              localStorage.setItem('access', res.data.access)
+              this.onSubmitAdd(e)
+            }
+      }
+  }
 
-    handleChange = (event) => {
+
+    handleFormInput = (event) => {
         const res = this.state.cash
         res[event.target.name] = event.target.value
         this.setState({ cash: res })
@@ -137,12 +183,12 @@ export default class Cash extends Component {
                   <Row>
                     <Col size={5}>
                     <p style={{margin: '5px'}}>
-                       My cash: {cash.my_cash} {cash.my_currency}<br/>
+                       My cash: {cash.my_cash} {this.state.my_currency}<br/>
                        Save date: {cash.save_date.slice(0, 10)}
                     </p>
                     </Col>
                     <Col size={1}>
-                        <DelButton onClick={() => this.onSubmit(cash.id)}>Delete</DelButton>
+                        <DelButton onClick={(e) => this.onSubmitDel(e, cash.id)}>Delete</DelButton>
                     </Col>
                     </Row>
                   </CashItem>
@@ -157,7 +203,7 @@ export default class Cash extends Component {
                         name='my_cash'
                         placeholder='my cash'
                         min="1"
-                        onChange={this.handleChange}
+                        onChange={this.handleFormInput}
                       />
                     </Label>
                     <br />
@@ -167,11 +213,11 @@ export default class Cash extends Component {
                         name='save_date'
                         placeholder='save date'
                         value={this.state.cash.save_date}
-                        onChange={this.handleChange}
+                        onChange={this.handleFormInput}
                       />
                     </Label>
                     <br />
-                    <Button onClick={() => this.onSubmitAdd(this.state)}>Add</Button>
+                    <Button onClick={(e) => this.onSubmitAdd(e, this.state)}>Add</Button>
                   </Form>
                   </Col>
                   <Col size={4}>
