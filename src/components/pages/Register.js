@@ -66,6 +66,21 @@ export const Button = styled.button`
   &:hover { background: #555; }
 `
 
+const Select = styled.select`
+  width: 50%;
+  background: #232632;
+  color: gray;
+  font-size: 12px;
+  border-radius: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+       option {
+         color: white;
+         background: #232632;
+         font-weight: small;
+       }
+`;
+
 export default class Logout extends Component {
     constructor (props) {
       super(props)
@@ -147,13 +162,12 @@ export default class Logout extends Component {
                     </Label>
                     <br />
                     <Label>
-                      <TextInput
-                        type='text'
-                        name='my_currency'
-                        placeholder='my_currency'
-                        value={this.state.data.my_currency}
-                        onChange={this.handleChange}
-                      />
+                      <Select id="currency" name="my_currency" onChange={this.handleChange}>
+                        <option value="PLN">PLN</option>
+                        <option value="USD">USD</option>
+                        <option value="CHF">CHF</option>
+                        <option value="EUR">EUR</option>
+                      </Select>
                     </Label>
                     <br />
                     <Button onClick={() => this.onSubmit(this.state)}>Register</Button>
