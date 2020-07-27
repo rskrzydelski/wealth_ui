@@ -34,6 +34,10 @@ const MetalItem = styled.div`
   }
 `
 
+const Space = styled.div`
+  margin-top: 50px;
+`
+
 const DelButton = styled.button`
   cursor: pointer;
   padding: 2px 5px;
@@ -275,6 +279,7 @@ export default class Metals extends Component {
                     </Row>
                   </MetalItem>
                 ))}
+                <Space></Space>
                 </Col>
             <Col size={3}>
                 <ListTitle>Add new metal</ListTitle>

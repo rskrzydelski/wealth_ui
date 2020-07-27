@@ -21,6 +21,10 @@ const Col = styled.div`
   flex: ${(props) => props.size};
 `
 
+const Wrapper = styled.div`
+   position: relative;
+   min-height: 100vh;
+`
 
 const PrivateRoute = ({ component: Component, isAuth }) => (
   <Route render={props => isAuth === true
@@ -44,10 +48,10 @@ class App extends Component {
   render () {
     return (
       <Router>
+      <div className="App">
         <Row>
         <Col size={1}>
-        <div className="App">
-          <div>
+            <Wrapper>
             <NavBar isAuth={this.state.isAuth} />
             <Switch>
               <Route path='/login' render={ props => (<Login isAuthenticated={this.isAuthenticated} {...props}  /> )} />
@@ -61,10 +65,10 @@ class App extends Component {
               <PrivateRoute exact path='/my_account' isAuth={this.state.isAuth} component={Account} />
             </Switch>
             <Bottom />
-          </div>
-        </div>
+            </Wrapper>
         </Col>
         </Row>
+        </div>
       </Router>
     )
   }

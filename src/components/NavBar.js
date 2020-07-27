@@ -14,11 +14,12 @@ const Col = styled.div`
   flex: ${(props) => props.size};
 `
 
-const headerStyle = {
-  background: '#000',
-  padding: '20px',
-  'text-align': 'right'
-}
+const HeaderStyle = styled.header`
+  height: auto;
+  background: #000;
+  padding: 20px;
+  text-align: right;
+`
 
 const StyledLink = styled(Link)`
   margin-left: 10px;
@@ -44,7 +45,7 @@ function NavBar(props) {
   const isAuth = props.isAuth
   if (isAuth) {
     return (
-      <header style={headerStyle}>
+      <HeaderStyle>
         <Row>
           <Col size={1}>
             <StyledBrand>Wealthy app</StyledBrand>
@@ -58,11 +59,11 @@ function NavBar(props) {
             <StyledLink to='/logout'>Logout</StyledLink>
           </Col>
         </Row>
-      </header>
+      </HeaderStyle>
     )
   }
   return (
-    <header style={headerStyle}>
+    <HeaderStyle>
       <Row>
         <Col size={1}>
           <StyledBrand>Wealthy app</StyledBrand>
@@ -72,7 +73,7 @@ function NavBar(props) {
           <StyledLink to='/register'>Sign up</StyledLink>
         </Col>
       </Row>
-    </header>
+    </HeaderStyle>
   )
 }
 

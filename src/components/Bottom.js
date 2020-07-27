@@ -1,21 +1,22 @@
 import React from 'react'
+import styled from 'styled-components'
 
-export default function Bottom() {
+export default function Bottom () {
   return (
-    <footer style={bottomBeltStyle}>
+    <BottomBelt>
       <p style={copyStyle}>&copy; Developed by RS</p>
-    </footer>
+    </BottomBelt>
   )
 }
 
-const bottomBeltStyle = {
-  background: 'black',
-  position: 'absolute',
-  bottom: '0',
-  left: '0',
-  right: '0',
-  weight: '100vw'
-}
+const BottomBelt = styled.footer`
+  background: black;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: auto;
+`
 
 const copyStyle = {
   'text-align': 'center',
