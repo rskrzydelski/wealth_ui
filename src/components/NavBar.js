@@ -1,47 +1,9 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
 
-const Grid = styled.div`
+import { Row, Col } from './pages/css/general'
+import { HeaderStyle, StyledLink, StyledBrand } from './pages/css/navbar'
 
-`
-
-const Row = styled.div`
-  display: flex;
-`
-
-const Col = styled.div`
-  flex: ${(props) => props.size};
-`
-
-const HeaderStyle = styled.header`
-  height: auto;
-  background: #000;
-  padding: 20px;
-  text-align: right;
-`
-
-const StyledLink = styled(Link)`
-  margin-left: 10px;
-  margin-right: 10px;
-  color: gold;
-  font-family: Courgette, cursive;
-  text-decoration: none;
-  &:hover {
-      color: white;
-  }
-`
-const StyledBrand = styled.h1`
-    color: white;
-    text-align: left;
-    font-family: 'Indie Flower', cursive;
-    font-size: 1.5rem;
-    &:hover {
-      color: gold;
-    }
-`
-
-function NavBar(props) {
+function NavBar (props) {
   const isAuth = props.isAuth
   if (isAuth) {
     return (

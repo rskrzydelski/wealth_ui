@@ -1,70 +1,11 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
 
 import { loginUrl } from '../endpoints'
 import { post } from '../api'
+import Welcome from '../Welcome'
 
-const Row = styled.div`
-  display: flex;
-`
-
-const Col = styled.div`
-  flex: ${(props) => props.size};
-`
-
-export const Welcome = styled.div`
-  background: #111519;
-  margin-right: 10px;
-  margin-top: 50px;
-  margin-left: 50px;
-`
-
-export const Paragraf = styled.p`
-  font-size: 15px;
-  font-family: 'Courgette', cursive;
-`
-
-export const Form = styled.div`
-  background: #2b2e39;
-  text-align: center;
-  border-radius: 14px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  margin-left: 20px;
-  margin-right: 10px;
-`
-
-export const Label = styled.label`
-  margin-top: 10px;
-  font-size: 14px;
-`
-
-export const TextInput = styled.input`
-  padding: 5px;
-  border-radius: 10px;
-  font-size: 12px;
-  background: #232632;
-  color: #d3d4d6;
-  width: 50%;
-  margin-top: 10px;
-  margin-right: 7px;
-  margin-bottom: 10px;
-  text-algin: center;
-`
-
-export const Button = styled.button`
-  background: #232632;
-  border-radius: 10px;
-  color: gold;
-  width: 30%;
-  height: 32px;
-  font-size: 0.9em;
-  margin: 10px auto;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid gold;
-  &:hover { background: #555; }
-`
+import { Row, Col } from './css/general'
+import { Submit, Form, Label, TextInput } from './css/form'
 
 export default class Login extends Component {
     constructor (props) {
@@ -124,16 +65,11 @@ export default class Login extends Component {
                       />
                     </Label>
                     <br />
-                    <Button onClick={() => this.onSubmit(this.state)}>Login</Button>
+                    <Submit onClick={() => this.onSubmit(this.state)}>Login</Submit>
                   </Form>
                 </Col>
                 <Col size={3}>
-                  <Welcome>
-                    <Paragraf>Wealth is application for store resources such as gold, silver, cash.</Paragraf>
-                    <Paragraf>You can add your gold, silver and cash, see current price, see how money you spend</Paragraf>
-                    <Paragraf>on particular resource or on all resources and finally see your profit or your lost.</Paragraf>
-                    <Paragraf>Currently you can choose following currencies: PLN, USD, CHF, EUR.</Paragraf>
-                  </Welcome>
+                  <Welcome />
                 </Col>
             </Row>
         )

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
 import Axios from 'axios'
 import Market from './Market'
 import {
@@ -14,33 +13,8 @@ import {
     refreshTokenUrl
 } from '../endpoints'
 
-const Row = styled.div`
-  display: flex;
-`
-
-const Col = styled.div`
-  flex: ${(props) => props.size};
-`
-
-const Line = styled.hr`
-  border-top: 1px solid gold;
-  margin-bottom: 20px;
-`
-
-const WallerCard = styled.div`
-  margin: 10px;
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid gold;
-  &:hover {
-      background: black;
-  }
-`
-
-const CardText = styled.div`
-  text-align: center;
-  font-family: Courgette, cursive;
-`
+import { Row, Col, Line } from './css/general'
+import { WalletCard, CardText } from './css/dashboard'
 
 export default class Dashboard extends Component {
   constructor (props) {
@@ -149,7 +123,7 @@ export default class Dashboard extends Component {
         <Line />
         <Row>
             <Col size={1}>
-              <WallerCard>
+              <WalletCard>
                 <CardText>
                   Gold 999<br/>
                   <hr/>
@@ -160,10 +134,10 @@ export default class Dashboard extends Component {
                   <span style={{color: 'red'}}>profit {this.state.gold999.profit} {this.state.my_currency}</span>
                   }
                 </CardText>
-              </WallerCard>
+              </WalletCard>
             </Col>
             <Col size={1}>
-            <WallerCard>
+            <WalletCard>
               <CardText>
                 Gold 585<br/>
                 <hr/>
@@ -174,10 +148,10 @@ export default class Dashboard extends Component {
                 <span style={{color: 'red'}}>profit {this.state.gold585.profit} {this.state.my_currency}</span>
                 }
               </CardText>
-            </WallerCard>        
+            </WalletCard>        
             </Col>
             <Col size={1}>
-              <WallerCard>
+              <WalletCard>
                 <CardText>
                   Gold 333<br/>
                   <hr/>
@@ -188,12 +162,12 @@ export default class Dashboard extends Component {
                   <span style={{color: 'red'}}>profit {this.state.gold333.profit}</span>
                   }
                 </CardText>
-              </WallerCard>        
+              </WalletCard>        
             </Col>
         </Row>
         <Row>
             <Col size={1}>
-              <WallerCard>
+              <WalletCard>
                 <CardText>
                   Silver 800<br/>
                   <hr/>
@@ -204,10 +178,10 @@ export default class Dashboard extends Component {
                   <span style={{color: 'red'}}>profit {this.state.silver800.profit} {this.state.my_currency}</span>
                   }
                 </CardText>
-              </WallerCard>
+              </WalletCard>
             </Col>
             <Col size={1}>
-              <WallerCard>
+              <WalletCard>
                 <CardText>
                   Silver 999<br/>
                   <hr/>
@@ -218,10 +192,10 @@ export default class Dashboard extends Component {
                   <span style={{color: 'red'}}>profit {this.state.silver999.profit} {this.state.my_currency}</span>
                   }
                 </CardText>
-              </WallerCard>        
+              </WalletCard>        
             </Col>
             <Col size={1}>
-              <WallerCard>
+              <WalletCard>
                 <CardText>
                   Cash<br/>
                   <hr/>
@@ -230,12 +204,12 @@ export default class Dashboard extends Component {
                   <span style={{color: 'red'}}>Cash {this.state.my_cash.cash} {this.state.my_currency}</span>
                   }
                 </CardText>
-              </WallerCard>
+              </WalletCard>
             </Col>
         </Row>
         <Row>
             <Col size={1}>
-              <WallerCard>
+              <WalletCard>
                 <CardText>
                   Summary value of all resources<br/>
                   {this.state.wallet.my_fortune > 0 ?
@@ -243,7 +217,7 @@ export default class Dashboard extends Component {
                   <span style={{color: 'red'}}>{this.state.wallet.my_fortune} {this.state.my_currency}</span>
                   }
                 </CardText>
-              </WallerCard>
+              </WalletCard>
             </Col>
         </Row>
       </React.Fragment>

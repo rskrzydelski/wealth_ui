@@ -1,5 +1,6 @@
 import React from 'react'
-import styled from 'styled-components'
+
+import { BottomBelt } from './pages/css/bottom'
 
 export default function Bottom () {
   return (
@@ -8,15 +9,6 @@ export default function Bottom () {
     </BottomBelt>
   )
 }
-
-const BottomBelt = styled.footer`
-  background: black;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100vw;
-  height: auto;
-`
 
 const copyStyle = {
   'text-align': 'center',

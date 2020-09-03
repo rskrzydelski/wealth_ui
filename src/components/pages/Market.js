@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
 import Axios from 'axios'
 
 import { gold999ozUrl, gold585gUrl, silver999ozUrl, silver800gUrl, accountUrl, refreshTokenUrl } from '../endpoints'
@@ -9,24 +8,8 @@ import gold585_ico from '../../static/gold_585_ico.png'
 import silver_ico from '../../static/silver_ico.png'
 import silver800_ico from '../../static/silver_800_ico.png'
 
-const Row = styled.div`
-  display: flex;
-`
-
-const Col = styled.div`
-  flex: ${(props) => props.size};
-`
-
-const MarketContainer = styled.div`
-  alignt-text: center;
-  margin: 10px;
-  height: 50%;
-`
-const MarketText = styled.div`
-  text-align: center;
-  font-family: Courgette, cursive;
-  margin-top: 2%;
-`
+import { Row, Col } from './css/general'
+import { MarketContainer, MarketText } from './css/market'
 
 export default class Market extends Component {
     constructor (props) {

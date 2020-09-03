@@ -11,20 +11,9 @@ import Login from './components/pages/Login'
 import Logout from './components/pages/Logout'
 import Register from './components/pages/Register'
 import Account from './components/pages/Account'
-import styled from 'styled-components'
 
-const Row = styled.div`
-  display: flex;
-`
-
-const Col = styled.div`
-  flex: ${(props) => props.size};
-`
-
-const Wrapper = styled.div`
-   position: relative;
-   min-height: 100vh;
-`
+import { Row, Col } from './components/pages/css/general'
+import { Wrapper } from './components/pages/css/app'
 
 const PrivateRoute = ({ component: Component, isAuth }) => (
   <Route render={props => isAuth === true

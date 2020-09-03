@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
 import Axios from 'axios'
 
+import { Row, Col } from './css/general'
+import { Submit, Form, Label, TextInput } from './css/form'
+import { ListTitle, CashItem, DelButton } from './css/cash'
 import cash from '../../static/franc.jpg'
 
 import { 
@@ -9,83 +11,6 @@ import {
     accountUrl,
     refreshTokenUrl
 } from '../endpoints'
-import { get, del, postAuth } from '../api'
-
-const Row = styled.div`
-  display: flex;
-`
-
-const Col = styled.div`
-  flex: ${(props) => props.size};
-`
-
-const CashItem = styled.div`
-  margin: 10px;
-  font-family: Courgette, cursive;
-  border-radius: 10px;
-  border: 1px solid gold;
-  max-width: 20vw;
-  &:hover {
-      background: black;
-  }
-`
-
-const DelButton = styled.button`
-  cursor: pointer;
-  padding: 2px 5px;
-  border-radius: 10px;
-  background: red;
-`
-
-const ListTitle = styled.h1`
-  margin: 10px;
-  text-align: center;
-  font-size: 1vw;
-  font-family: Courgette, cursive;
-`
-
-// form styles
-export const Form = styled.div`
-  border: 1px solid gold;
-  text-align: center;
-  border-radius: 14px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  margin-left: 20px;
-  margin-right: 10px;
-`
-
-export const Label = styled.label`
-  margin-top: 10px;
-  font-size: 14px;
-`
-
-export const TextInput = styled.input`
-  padding: 5px;
-  border-radius: 10px;
-  font-size: 12px;
-  background: #232632;
-  color: #d3d4d6;
-  width: 50%;
-  margin-top: 10px;
-  margin-right: 7px;
-  margin-bottom: 10px;
-  text-algin: center;
-`
-
-export const Button = styled.button`
-  background: #232632;
-  border-radius: 10px;
-  color: gold;
-  width: 30%;
-  height: 32px;
-  font-size: 0.9em;
-  margin: 10px auto;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid gold;
-  &:hover { background: black; }
-`
 
 export default class Cash extends Component {
     constructor (props) {
@@ -217,7 +142,7 @@ export default class Cash extends Component {
                       />
                     </Label>
                     <br />
-                    <Button onClick={(e) => this.onSubmitAdd(e, this.state)}>Add</Button>
+                    <Submit onClick={(e) => this.onSubmitAdd(e, this.state)}>Add</Submit>
                   </Form>
                   </Col>
                   <Col size={4}>

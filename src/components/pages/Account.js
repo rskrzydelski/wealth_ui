@@ -1,33 +1,10 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
 
 import { accountUrl } from '../endpoints'
 import { get } from '../api'
 
-const Row = styled.div`
-  display: flex;
-`
-
-const Col = styled.div`
-  flex: ${(props) => props.size};
-`
-
-const Line = styled.hr`
-  border-top: 1px solid gold;
-  margin-bottom: 20px;
-`
-
-const UserCard = styled.div`
-  margin: 10px;
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid gold;
-`
-
-const CardText = styled.div`
-  text-align: center;
-  font-family: Courgette, cursive;
-`
+import { Row, Col, Line } from './css/general'
+import { UserCard, CardText } from './css/account'
 
 export default class Account extends Component {
   constructor (props) {
