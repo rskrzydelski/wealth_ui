@@ -12,7 +12,6 @@ import Logout from './components/pages/Logout'
 import Register from './components/pages/Register'
 import Account from './components/pages/Account'
 
-import { Row, Col } from './components/pages/css/general'
 import { Wrapper } from './components/pages/css/app'
 
 const PrivateRoute = ({ component: Component, isAuth }) => (
@@ -37,10 +36,8 @@ class App extends Component {
   render () {
     return (
       <Router>
-      <div className="App">
-        <Row>
-        <Col size={1}>
-            <Wrapper>
+        <div className="App">
+          <Wrapper>
             <NavBar isAuth={this.state.isAuth} />
             <Switch>
               <Route path='/login' render={ props => (<Login isAuthenticated={this.isAuthenticated} {...props}  /> )} />
@@ -54,9 +51,7 @@ class App extends Component {
               <PrivateRoute exact path='/my_account' isAuth={this.state.isAuth} component={Account} />
             </Switch>
             <Bottom />
-            </Wrapper>
-        </Col>
-        </Row>
+          </Wrapper>
         </div>
       </Router>
     )

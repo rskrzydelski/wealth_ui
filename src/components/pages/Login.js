@@ -4,7 +4,7 @@ import { loginUrl } from '../endpoints'
 import { post } from '../api'
 import Welcome from '../Welcome'
 
-import { Row, Col } from './css/general'
+import { AuthWrapper } from './css/auth'
 import { Submit, Form, Label, TextInput } from './css/form'
 
 export default class Login extends Component {
@@ -42,36 +42,30 @@ export default class Login extends Component {
 
     render() {
         return (
-            <Row>
-                <Col size={1}>
-                  <Form>
-                    <Label>
-                      <TextInput
-                        type='email'
-                        name='email'
-                        placeholder='email'
-                        value={this.state.credentials.email}
-                        onChange={this.handleChange}
-                      />
-                    </Label>
-                    <br />
-                    <Label>
-                      <TextInput
-                        type='password'
-                        name='password'
-                        placeholder='password'
-                        value={this.state.credentials.password}
-                        onChange={this.handleChange}
-                      />
-                    </Label>
-                    <br />
-                    <Submit onClick={() => this.onSubmit(this.state)}>Login</Submit>
-                  </Form>
-                </Col>
-                <Col size={3}>
-                  <Welcome />
-                </Col>
-            </Row>
+          <AuthWrapper>
+            <Form>
+              <Label>
+                <TextInput
+                  type='email'
+                  name='email'
+                  placeholder='email'
+                  value={this.state.credentials.email}
+                  onChange={this.handleChange}
+                />
+              </Label>
+              <Label>
+                <TextInput
+                  type='password'
+                  name='password'
+                  placeholder='password'
+                  value={this.state.credentials.password}
+                  onChange={this.handleChange}
+                />
+              </Label>
+              <Submit onClick={() => this.onSubmit(this.state)}>Login</Submit>
+            </Form>
+            <Welcome />
+          </AuthWrapper>
         )
     }
 }

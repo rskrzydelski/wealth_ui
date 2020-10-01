@@ -1,41 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { FaBars } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
+import { MenuData, AuthMenuData } from './SidebarData'
 
-import { Row, Col } from './pages/css/general'
-import { HeaderStyle, StyledLink, StyledBrand } from './pages/css/navbar'
+import { Navbar, Hamburger, NavMenu, NavMenuItems, NavMenuItem, StyledBrand } from './pages/css/navbar'
 
 function NavBar (props) {
   const isAuth = props.isAuth
-  if (isAuth) {
-    return (
-      <HeaderStyle>
-        <Row>
-          <Col size={1}>
-            <StyledBrand>Wealthy app</StyledBrand>
-          </Col>
-          <Col size={3}>
-            <StyledLink to='/'>Dashboard</StyledLink>
-            <StyledLink to='/gold'>Gold</StyledLink>
-            <StyledLink to='/silver'>Silver</StyledLink>
-            <StyledLink to='/cash'>Cash</StyledLink>
-            <StyledLink to='/my_account'>My Account</StyledLink>
-            <StyledLink to='/logout'>Logout</StyledLink>
-          </Col>
-        </Row>
-      </HeaderStyle>
-    )
-  }
+  const [sidebar, setSidebar] = useState(false)
+  const showSidebar = () => setSidebar(!sidebar)
+  const data = isAuth ? AuthMenuData : MenuData
+
   return (
-    <HeaderStyle>
-      <Row>
-        <Col size={1}>
-          <StyledBrand>Wealthy app</StyledBrand>
-        </Col>
-        <Col size={3}>
-          <StyledLink to='/login'>Login</StyledLink>
-          <StyledLink to='/register'>Sign up</StyledLink>
-        </Col>
-      </Row>
-    </HeaderStyle>
+    <Navbar>
+      <StyledBrand>Wealthy app</StyledBrand>
+      <Hamburger>
+        <FaBars onClick={showSidebar} />
+      </Hamburger>
+      <NavMenu sidebar={sidebar}>
+        <NavMenuItems onClick={showSidebar}>
+          {data.map((item, index) => {
+            return <NavMenuItem key={index} className={item.cName}>
+              <Link to={item.path}>
+                <span>{item.title}</span>
+              </Link>
+            </NavMenuItem>
+          })}
+        </NavMenuItems>
+      </NavMenu>
+    </Navbar>
   )
 }
 

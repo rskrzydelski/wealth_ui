@@ -15,15 +15,14 @@ export const Line = styled.hr`
 
 export const TextContainer = styled.div`
   background: #111519;
-  margin-right: 10px;
-  margin-top: 50px;
-  margin-left: 50px;
+  margin: 30px 15px;
 `
 
 export const Description = styled.p`
-  font-size: 15px;
+  padding: 0 30px;
+  font-size: 13px;
   font-family: 'Saira', sans-serif;
-  letter-spacing: 1px;
+  text-align: justify;
   word-spacing: 3px;
   line-height: 22px;
 `

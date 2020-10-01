@@ -4,7 +4,7 @@ import Welcome from '../Welcome'
 import { registerUrl } from '../endpoints'
 import { post } from '../api'
 
-import { Row, Col } from './css/general'
+import { AuthWrapper } from './css/auth'
 import { Submit, Form, Label, TextInput, Select } from './css/form'
 
 export default class Logout extends Component {
@@ -44,65 +44,56 @@ export default class Logout extends Component {
 
     render() {
         return (
-            <Row>
-                <Col size={1}>
-                  <Form>
-                    <Label>
-                      <TextInput
-                        type='text'
-                        name='username'
-                        placeholder='username'
-                        value={this.state.data.username}
-                        onChange={this.handleChange}
-                      />
-                    </Label>
-                    <br />
-                    <Label>
-                      <TextInput
-                        type='email'
-                        name='email'
-                        placeholder='email'
-                        value={this.state.data.email}
-                        onChange={this.handleChange}
-                      />
-                    </Label>
-                    <br />
-                    <Label>
-                      <TextInput
-                        type='password'
-                        name='password'
-                        placeholder='password'
-                        value={this.state.data.password}
-                        onChange={this.handleChange}
-                      />
-                    </Label>
-                    <br />
-                    <Label>
-                      <TextInput
-                        type='password'
-                        name='re_password'
-                        placeholder='re_password'
-                        value={this.state.data.re_password}
-                        onChange={this.handleChange}
-                      />
-                    </Label>
-                    <br />
-                    <Label>
-                      <Select id="currency" name="my_currency" onChange={this.handleChange}>
-                        <option value="PLN">PLN</option>
-                        <option value="USD">USD</option>
-                        <option value="CHF">CHF</option>
-                        <option value="EUR">EUR</option>
-                      </Select>
-                    </Label>
-                    <br />
-                    <Submit onClick={() => this.onSubmit(this.state)}>Register</Submit>
-                  </Form>
-                </Col>
-                <Col size={3}>
-                  <Welcome />
-                </Col>
-            </Row>
+          <AuthWrapper>
+            <Form>
+              <Label>
+                <TextInput
+                  type='text'
+                  name='username'
+                  placeholder='username'
+                  value={this.state.data.username}
+                  onChange={this.handleChange}
+                />
+              </Label>
+              <Label>
+                <TextInput
+                  type='email'
+                  name='email'
+                  placeholder='email'
+                  value={this.state.data.email}
+                  onChange={this.handleChange}
+                />
+              </Label>
+              <Label>
+                <TextInput
+                  type='password'
+                  name='password'
+                  placeholder='password'
+                  value={this.state.data.password}
+                  onChange={this.handleChange}
+                />
+                </Label>
+                <Label>
+                  <TextInput
+                    type='password'
+                    name='re_password'
+                    placeholder='re_password'
+                    value={this.state.data.re_password}
+                    onChange={this.handleChange}
+                  />
+                </Label>
+                <Label>
+                  <Select id="currency" name="my_currency" onChange={this.handleChange}>
+                    <option value="PLN">PLN</option>
+                    <option value="USD">USD</option>
+                    <option value="CHF">CHF</option>
+                    <option value="EUR">EUR</option>
+                  </Select>
+                </Label>
+                <Submit onClick={() => this.onSubmit(this.state)}>Register</Submit>
+              </Form>
+              <Welcome />
+            </AuthWrapper>
         )
     }
 }
