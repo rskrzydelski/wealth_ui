@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Axios from 'axios'
 
 import { Row, Col } from './css/general'
-import { Submit, Form, Label, TextInput } from './css/form'
+import { SubmitButton, Form, TextInput } from './css/form'
 import { ListTitle, CashItem, DelButton } from './css/cash'
 import cash from '../../static/franc.jpg'
 
@@ -76,7 +76,7 @@ export default class Cash extends Component {
       }
     }
 
-  onSubmitAdd = async (e) => {
+    handleSubmitAdd = async (e) => {
       e.preventDefault()
       try {
           await Axios.post(cashUrl, this.state.cash, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
@@ -89,8 +89,7 @@ export default class Cash extends Component {
               this.onSubmitAdd(e)
             }
       }
-  }
-
+    }
 
     handleFormInput = (event) => {
         const res = this.state.cash
@@ -121,8 +120,7 @@ export default class Cash extends Component {
                 </Col>
             <Col size={3}>
                 <ListTitle>Add new cash</ListTitle>
-                <Form>
-                    <Label>
+                <Form onSubmit={this.handleSubmitAdd}>
                       <TextInput
                         type='number'
                         name='my_cash'
@@ -130,9 +128,7 @@ export default class Cash extends Component {
                         min="1"
                         onChange={this.handleFormInput}
                       />
-                    </Label>
                     <br />
-                    <Label>
                       <TextInput
                         type='date'
                         name='save_date'
@@ -140,9 +136,8 @@ export default class Cash extends Component {
                         value={this.state.cash.save_date}
                         onChange={this.handleFormInput}
                       />
-                    </Label>
                     <br />
-                    <Submit onClick={(e) => this.onSubmitAdd(e, this.state)}>Add</Submit>
+                    <SubmitButton type="submit" value="Add" />
                   </Form>
                   </Col>
                   <Col size={4}>

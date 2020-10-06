@@ -16,13 +16,21 @@ export const Line = styled.hr`
 export const TextContainer = styled.div`
   background: #111519;
   margin: 30px 15px;
+  @media (min-width: 640px) {
+    width: 40%;
+    float: left;
+  }
 `
 
 export const Description = styled.p`
-  padding: 0 30px;
-  font-size: 13px;
+  padding: 0 10px;
+  font-size: 12px;
   font-family: 'Saira', sans-serif;
   text-align: justify;
   word-spacing: 3px;
   line-height: 22px;
+  @media (min-width: 768px) {
+     margin-top: 5px;
+     font-size: 16px;
+  }
 `

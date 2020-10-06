@@ -5,7 +5,7 @@ import { post } from '../api'
 import Welcome from '../Welcome'
 
 import { AuthWrapper } from './css/auth'
-import { Submit, Form, Label, TextInput } from './css/form'
+import { SubmitButton, Form, TextInput } from './css/form'
 
 export default class Login extends Component {
     constructor (props) {
@@ -27,24 +27,24 @@ export default class Login extends Component {
       post(loginUrl, {email: email, password: password}, this.Authenticate)
     }
 
-    onSubmit = (value) => {
-        this.loginUser(this.state.credentials.email, this.state.credentials.password)
-        this.setState({
-            credentials: { email: '', password: '' }
-          })
-    }
-
     handleChange = (event) => {
         const cr = this.state.credentials
         cr[event.target.name] = event.target.value
         this.setState({ credentials: cr })
     }
 
+    handleSubmit = (event) => {
+      this.loginUser(this.state.credentials.email, this.state.credentials.password)
+      this.setState({
+          credentials: { email: '', password: '' }
+        })
+      event.preventDefault();
+    }
+
     render() {
         return (
           <AuthWrapper>
-            <Form>
-              <Label>
+            <Form onSubmit={this.handleSubmit}>
                 <TextInput
                   type='email'
                   name='email'
@@ -52,8 +52,6 @@ export default class Login extends Component {
                   value={this.state.credentials.email}
                   onChange={this.handleChange}
                 />
-              </Label>
-              <Label>
                 <TextInput
                   type='password'
                   name='password'
@@ -61,8 +59,7 @@ export default class Login extends Component {
                   value={this.state.credentials.password}
                   onChange={this.handleChange}
                 />
-              </Label>
-              <Submit onClick={() => this.onSubmit(this.state)}>Login</Submit>
+              <SubmitButton type="submit" value="Login" />
             </Form>
             <Welcome />
           </AuthWrapper>

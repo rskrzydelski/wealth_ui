@@ -1,46 +1,57 @@
 import styled from 'styled-components'
 
-
-export const Submit = styled.button`
-  background: #232632;
-  border-radius: 10px;
-  color: gold;
-  width: 30%;
-  height: 32px;
-  font-size: 0.9em;
-  margin: 10px auto;
-  justify-content: center;
-  align-items: center;
+export const Form = styled.form`
   border: 1px solid gold;
-  &:hover { background: black; }
-`
-
-export const Form = styled.div`
-  border: 1px solid gold;
-  text-align: center;
   border-radius: 14px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  margin-left: 20px;
-  margin-right: 10px;
-`
-
-export const Label = styled.label`
-  margin-top: 10px;
-  font-size: 14px;
+  margin: 30px 40px;
+  @media (min-width: 640px) {
+    float: left;
+    width: 40%;
+  }
 `
 
 export const TextInput = styled.input`
-  padding: 5px;
+  display: block;
   border-radius: 10px;
-  font-size: 12px;
   background: #232632;
-  color: #d3d4d6;
-  width: 50%;
-  margin-top: 10px;
-  margin-right: 7px;
-  margin-bottom: 10px;
-  text-algin: center;
+  padding: 5px;
+  width: 80%;
+  margin: 10px auto;
+  font-size: 12px;
+  text-align: center;
+  font-family: 'Saira', sans-serif;
+  color: gold;
+`
+
+export const SelectInput = styled.select`
+  display: block;
+  background: #232632;
+  border-radius: 10px;
+  width: 80%;
+  margin: 10px auto;
+  padding: 5px;
+  color: gray;
+  font-size: 12px;
+  text-align: center;
+       option {
+         color: white;
+         background: #232632;
+         font-weight: small;
+       }
+`
+
+export const SubmitButton = styled.input`
+  display: block;
+  width: 30%;
+  height: 32px;
+  margin: 15px auto;
+  background: #232632;
+  border: 1px solid gold;
+  border-radius: 10px;
+  color: gold;
+  font-family: 'Saira', sans-serif;
+  text-transform: uppercase;
+  ${'' /* &:hover { background: black; } */}
 `
 
 export const TextArea = styled.textarea`
@@ -55,19 +66,4 @@ export const TextArea = styled.textarea`
   margin-bottom: 10px;
   text-algin: center;
 
-`
-
-export const Select = styled.select`
-  width: 50%;
-  background: #232632;
-  color: gray;
-  font-size: 12px;
-  border-radius: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-       option {
-         color: white;
-         background: #232632;
-         font-weight: small;
-       }
 `

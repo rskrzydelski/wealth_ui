@@ -5,7 +5,7 @@ import { registerUrl } from '../endpoints'
 import { post } from '../api'
 
 import { AuthWrapper } from './css/auth'
-import { Submit, Form, Label, TextInput, Select } from './css/form'
+import { SubmitButton, Form, TextInput, SelectInput } from './css/form'
 
 export default class Logout extends Component {
     constructor (props) {
@@ -29,24 +29,24 @@ export default class Logout extends Component {
           )
     }
 
-    onSubmit = (value) => {
-        this.registerUser(this.state.data.username, this.state.data.email, this.state.data.password, this.state.data.re_password, this.state.data.my_currency)
-        this.setState({
-            data: { username: '', email: '', password: '', re_password: '', my_currency: '' }
-          })
-    }
-
     handleChange = (event) => {
         const data = this.state.data
         data[event.target.name] = event.target.value
         this.setState({ data: data })
     }
 
+    handleSubmit = (event) => {
+      this.registerUser(this.state.data.username, this.state.data.email, this.state.data.password, this.state.data.re_password, this.state.data.my_currency)
+      this.setState({
+          data: { username: '', email: '', password: '', re_password: '', my_currency: '' }
+        })
+      event.preventDefault();
+    }
+
     render() {
         return (
           <AuthWrapper>
-            <Form>
-              <Label>
+            <Form onSubmit={this.handleSubmit}>
                 <TextInput
                   type='text'
                   name='username'
@@ -54,8 +54,6 @@ export default class Logout extends Component {
                   value={this.state.data.username}
                   onChange={this.handleChange}
                 />
-              </Label>
-              <Label>
                 <TextInput
                   type='email'
                   name='email'
@@ -63,8 +61,6 @@ export default class Logout extends Component {
                   value={this.state.data.email}
                   onChange={this.handleChange}
                 />
-              </Label>
-              <Label>
                 <TextInput
                   type='password'
                   name='password'
@@ -72,8 +68,6 @@ export default class Logout extends Component {
                   value={this.state.data.password}
                   onChange={this.handleChange}
                 />
-                </Label>
-                <Label>
                   <TextInput
                     type='password'
                     name='re_password'
@@ -81,16 +75,13 @@ export default class Logout extends Component {
                     value={this.state.data.re_password}
                     onChange={this.handleChange}
                   />
-                </Label>
-                <Label>
-                  <Select id="currency" name="my_currency" onChange={this.handleChange}>
+                  <SelectInput id="currency" name="my_currency" onChange={this.handleChange}>
                     <option value="PLN">PLN</option>
                     <option value="USD">USD</option>
                     <option value="CHF">CHF</option>
                     <option value="EUR">EUR</option>
-                  </Select>
-                </Label>
-                <Submit onClick={() => this.onSubmit(this.state)}>Register</Submit>
+                  </SelectInput>
+                  <SubmitButton type="submit" value="Register" />
               </Form>
               <Welcome />
             </AuthWrapper>

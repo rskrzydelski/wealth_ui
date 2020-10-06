@@ -15,7 +15,7 @@ import {
 } from '../endpoints'
 
 import { Row, Col } from './css/general'
-import { Submit, Form, Label, TextInput, TextArea, Select } from './css/form'
+import { SubmitButton, Form, TextInput, TextArea, SelectInput } from './css/form'
 import { ListTitle, MetalItem, Space, DelButton } from './css/metals'
 
 
@@ -178,14 +178,11 @@ export default class Metals extends Component {
                 </Col>
             <Col size={3}>
                 <ListTitle>Add new metal</ListTitle>
-                <Form>
-                    <Label>
-                      <Select id="resource_name" name="name" onChange={this.handleFormInput}>
+                <Form onSubmit={(e) => this.onSubmitAdd(e, this.state)}>
+                      <SelectInput id="resource_name" name="name" onChange={this.handleFormInput}>
                         {options}
-                      </Select>
-                    </Label>
+                      </SelectInput>
                     <br />
-                    <Label>
                       <TextInput
                         type='number'
                         name='bought_price'
@@ -193,9 +190,7 @@ export default class Metals extends Component {
                         min="1"
                         onChange={this.handleFormInput}
                       />
-                    </Label>
                     <br />
-                    <Label>
                       <TextInput
                         type='number'
                         name='amount'
@@ -203,17 +198,13 @@ export default class Metals extends Component {
                         min="1"
                         onChange={this.handleFormInput}
                       />
-                    </Label>
                     <br />
-                    <Label>
-                    <Select id="resource_unit" name="unit" onChange={this.handleFormInput}>
+                    <SelectInput id="resource_unit" name="unit" onChange={this.handleFormInput}>
                         <option value="oz">ounce</option>
                         <option value="g">gram</option>
                         <option value="kg">kilogram</option>
-                      </Select>
-                    </Label>
+                      </SelectInput>
                     <br />
-                    <Label>
                       <TextInput
                         type='date'
                         name='date_of_bought'
@@ -221,9 +212,7 @@ export default class Metals extends Component {
                         value={this.state.resource.date_of_bought}
                         onChange={this.handleFormInput}
                       />
-                    </Label>
                     <br />
-                    <Label>
                       <TextArea
                         name="description"
                         rows="4"
@@ -232,9 +221,8 @@ export default class Metals extends Component {
                       >
                         description
                       </TextArea>
-                    </Label>
                     <br />
-                    <Submit onClick={(e) => this.onSubmitAdd(e, this.state)}>Add</Submit>
+                    <SubmitButton type="submit" value="Add" />
                   </Form>
                   </Col>
                   <Col size={4}>
