@@ -12,7 +12,7 @@ import Logout from './components/pages/Logout'
 import Register from './components/pages/Register'
 import Account from './components/pages/Account'
 
-import { Wrapper } from './components/pages/css/app'
+import { MainWrapper, Wrapper } from './components/pages/css/app'
 
 const PrivateRoute = ({ component: Component, isAuth }) => (
   <Route render={props => isAuth === true
@@ -35,8 +35,8 @@ class App extends Component {
 
   render () {
     return (
-      <Router>
-        <div className="App">
+      <MainWrapper>
+        <Router>
           <Wrapper>
             <NavBar isAuth={this.state.isAuth} />
             <Switch>
@@ -50,10 +50,10 @@ class App extends Component {
               <PrivateRoute exact path='/cash' isAuth={this.state.isAuth} component={Cash} />
               <PrivateRoute exact path='/my_account' isAuth={this.state.isAuth} component={Account} />
             </Switch>
-            <Bottom />
           </Wrapper>
-        </div>
-      </Router>
+        </Router>
+        <Bottom />
+      </MainWrapper>
     )
   }
 }
