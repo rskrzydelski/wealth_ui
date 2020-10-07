@@ -3,13 +3,7 @@ import Axios from 'axios'
 
 import { gold999ozUrl, gold585gUrl, silver999ozUrl, silver800gUrl, accountUrl, refreshTokenUrl } from '../endpoints'
 
-import gold_ico from '../../static/gold_ico.png'
-import gold585_ico from '../../static/gold_585_ico.png'
-import silver_ico from '../../static/silver_ico.png'
-import silver800_ico from '../../static/silver_800_ico.png'
-
-import { Row, Col } from './css/general'
-import { MarketContainer, MarketText } from './css/market'
+import { MarketContainer, MarketItem, MarketText, TextSpan, Gold999Icon, Gold585Icon, Silver800Icon, Silver999Icon, FlmIcon, EthIcon, NeoIcon, BtnIcon } from './css/market'
 
 export default class Market extends Component {
     constructor (props) {
@@ -79,56 +73,64 @@ export default class Market extends Component {
 
   render() {
     return (
-      <Row>
-        <Col size={1}>
-          <MarketContainer>
-            <Row>
-              <Col size={2}>
-                <MarketText>Gold 999 oz: {this.state.market.gold999oz} {this.state.my_currency}</MarketText>
-              </Col>
-              <Col size={1}>
-                <img src={gold_ico} alt='gold 999' style={{'max-width': '50%', height: 'auto'}} />
-              </Col>
-            </Row>
+        <MarketContainer>
+            <MarketItem>
+                <Gold999Icon />
+                <MarketText>
+                  <TextSpan>Gold 999 oz: </TextSpan>
+                  <TextSpan>{this.state.market.gold999oz} {this.state.my_currency}</TextSpan>
+                </MarketText>
+            </MarketItem>
+            <MarketItem>
+                <Gold585Icon />
+                <MarketText>
+                  <TextSpan>Gold 585 g: </TextSpan>
+                  <TextSpan>{this.state.market.gold585g} {this.state.my_currency}</TextSpan>
+                </MarketText>
+            </MarketItem>
+            <MarketItem>
+                <Silver999Icon />
+                <MarketText>
+                  <TextSpan>Silver 999 oz: </TextSpan>
+                  <TextSpan>{this.state.market.silver999oz} {this.state.my_currency}</TextSpan>
+                </MarketText>
+            </MarketItem>
+            <MarketItem>
+                <Silver800Icon />
+                <MarketText>
+                  <TextSpan>Silver 800 g: </TextSpan>
+                  <TextSpan>{this.state.market.silver800g} {this.state.my_currency}</TextSpan>
+                </MarketText>
+            </MarketItem>
+            <MarketItem>
+                <BtnIcon />
+                <MarketText>
+                  <TextSpan>BTH: </TextSpan>
+                  <TextSpan>40000 {this.state.my_currency}</TextSpan>
+                </MarketText>
+            </MarketItem>
+            <MarketItem>
+                <EthIcon />
+                <MarketText>
+                  <TextSpan>EHT: </TextSpan>
+                  <TextSpan>1670 {this.state.my_currency}</TextSpan>
+                </MarketText>
+            </MarketItem>
+            <MarketItem>
+                <FlmIcon />
+                <MarketText>
+                  <TextSpan>FLM: </TextSpan>
+                  <TextSpan>10 {this.state.my_currency}</TextSpan>
+                </MarketText>
+            </MarketItem>
+            <MarketItem>
+                <NeoIcon />
+                <MarketText>
+                  <TextSpan>NEO: </TextSpan>
+                  <TextSpan>80 {this.state.my_currency}</TextSpan>
+                </MarketText>
+            </MarketItem>
           </MarketContainer>
-        </Col>
-        <Col size={1}>
-          <MarketContainer>
-            <Row>
-              <Col size={2}>
-                <MarketText>Gold 585 g: {this.state.market.gold585g} {this.state.my_currency}</MarketText>
-              </Col>
-              <Col size={1}>
-                <img src={gold585_ico} alt='gold 585' style={{'max-width': '30%', height: 'auto'}} />
-              </Col>
-            </Row>
-          </MarketContainer>
-        </Col>
-        <Col size={1}>
-          <MarketContainer>
-            <Row>
-              <Col size={2}>
-                <MarketText>Silver 999 oz: {this.state.market.silver999oz} {this.state.my_currency}</MarketText>
-              </Col>
-              <Col size={1}>
-                <img src={silver_ico} alt='silver 999' style={{'max-width': '40%', height: 'auto'}} />
-              </Col>
-            </Row>
-          </MarketContainer>
-        </Col>
-        <Col size={1}>
-          <MarketContainer>
-            <Row>
-              <Col size={2}>
-                <MarketText>Silver 800 g: {this.state.market.silver800g} {this.state.my_currency}</MarketText>
-              </Col>
-              <Col size={1}>
-                <img src={silver800_ico} alt='silver 800' style={{'max-width': '30%', height: 'auto'}} />
-              </Col>
-            </Row>
-          </MarketContainer>
-        </Col>
-      </Row>
     )
   }
 }
