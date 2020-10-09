@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Table } from '../Table'
 import Axios from 'axios'
 import Market from './Market'
 import {
@@ -13,8 +14,8 @@ import {
     refreshTokenUrl
 } from '../endpoints'
 
-import { Row, Col, Line } from './css/general'
-import { WalletCard, CardText } from './css/dashboard'
+import { Line } from './css/general'
+import { TableWrapper, Profit, Value, Spend } from './css/dashboard'
 
 export default class Dashboard extends Component {
   constructor (props) {
@@ -117,109 +118,107 @@ export default class Dashboard extends Component {
   }
 
   render() {
+
+    const columns = [
+        {
+          Header: 'My wallet',
+          columns: [
+            {
+              Header: 'resource',
+              accessor: 'name',
+            },
+            {
+              Header: 'value',
+              accessor: 'value',
+            },
+            {
+              Header: 'cash spend',
+              accessor: 'cash',
+            },
+            {
+              Header: 'profit',
+              accessor: 'profit',
+            },
+          ],
+        },
+      ]
+
+    const data = [
+      {
+        name: "GOLD (999)", 
+        value: <Value>{this.state.gold999.value + ' ' + this.state.my_currency}</Value>, 
+        cash: <Spend>{this.state.gold999.cash_spend + ' ' + this.state.my_currency}</Spend>, 
+        profit: <Profit profit={this.state.gold999.profit}>{this.state.gold999.profit + ' ' + this.state.my_currency}</Profit>
+      },
+      {
+        name: "GOLD (585)", 
+        value: <Value>{this.state.gold585.value + ' ' + this.state.my_currency}</Value>, 
+        cash: <Spend>{this.state.gold585.cash_spend + ' ' + this.state.my_currency}</Spend>, 
+        profit: <Profit profit={this.state.gold585.profit}>{this.state.gold585.profit + ' ' + this.state.my_currency}</Profit>
+      },
+      {
+        name: "GOLD (333)", 
+        value: <Value>{this.state.gold333.value + ' ' + this.state.my_currency}</Value>, 
+        cash: <Spend>{this.state.gold333.cash_spend + ' ' + this.state.my_currency}</Spend>, 
+        profit: <Profit profit={this.state.gold333.profit}>{this.state.gold333.profit + ' ' + this.state.my_currency}</Profit>
+      },
+      {
+        name: "SILVER (999)", 
+        value: <Value>{this.state.silver999.value + ' ' + this.state.my_currency}</Value>, 
+        cash: <Spend>{this.state.silver999.cash_spend + ' ' + this.state.my_currency}</Spend>, 
+        profit: <Profit profit={this.state.silver999.profit}>{this.state.silver999.profit + ' ' + this.state.my_currency}</Profit>
+      },
+      {
+        name: "SILVER (800)", 
+        value: <Value>{this.state.silver800.value + ' ' + this.state.my_currency}</Value>, 
+        cash: <Spend>{this.state.silver800.cash_spend + ' ' + this.state.my_currency}</Spend>, 
+        profit: <Profit profit={this.state.silver800.profit}>{this.state.silver800.profit + ' ' + this.state.my_currency}</Profit>
+      },
+      {
+        name: "NEO", 
+        value: <Value>{0 + ' ' + this.state.my_currency}</Value>, 
+        cash: <Spend>{0}</Spend>, 
+        profit: <Profit profit={0}>0</Profit>
+      },
+      {
+        name: "ETH", 
+        value: <Value>{0 + ' ' + this.state.my_currency}</Value>, 
+        cash: <Spend>{0}</Spend>, 
+        profit: <Profit profit={0}>0</Profit>
+      },
+      {
+        name: "FLM", 
+        value: <Value>{0 + ' ' + this.state.my_currency}</Value>, 
+        cash: <Spend>{0}</Spend>, 
+        profit: <Profit profit={0}>0</Profit>
+      },
+      {
+        name: "LCC", 
+        value: <Value>{0 + ' ' + this.state.my_currency}</Value>, 
+        cash: <Spend>{0}</Spend>, 
+        profit: <Profit profit={0}>0</Profit>
+      },
+      {
+        name: "CASH",
+        value: <Value>{this.state.my_cash.cash + ' ' + this.state.my_currency}</Value>,
+        cash: "---",
+        profit: "---"
+      },
+      {
+        name: "SUMMARY",
+        value: <Value>{this.state.wallet.my_fortune + ' ' + this.state.my_currency}</Value>,
+        cash: "---",
+        profit: "---"
+      }
+    ]
+
     return (
       <React.Fragment>
         <Market />
         <Line />
-        <Row>
-            <Col size={1}>
-              <WalletCard>
-                <CardText>
-                  Gold 999<br/>
-                  <hr/>
-                  value {this.state.gold999.value} {this.state.my_currency}<br/>
-                  cash spend {this.state.gold999.cash_spend} {this.state.my_currency}<br/>
-                  {this.state.gold999.profit > 0 ? 
-                  <span style={{color: '#00ff00'}}>profit {this.state.gold999.profit} {this.state.my_currency}</span> :
-                  <span style={{color: 'red'}}>profit {this.state.gold999.profit} {this.state.my_currency}</span>
-                  }
-                </CardText>
-              </WalletCard>
-            </Col>
-            <Col size={1}>
-            <WalletCard>
-              <CardText>
-                Gold 585<br/>
-                <hr/>
-                value {this.state.gold585.value} {this.state.my_currency}<br/>
-                cash spend {this.state.gold585.cash_spend} {this.state.my_currency}<br/>
-                {this.state.gold585.profit > 0 ?
-                <span style={{color: '#00ff00'}}>profit {this.state.gold585.profit} {this.state.my_currency}</span> :
-                <span style={{color: 'red'}}>profit {this.state.gold585.profit} {this.state.my_currency}</span>
-                }
-              </CardText>
-            </WalletCard>        
-            </Col>
-            <Col size={1}>
-              <WalletCard>
-                <CardText>
-                  Gold 333<br/>
-                  <hr/>
-                  value {this.state.gold333.value} {this.state.my_currency}<br/>
-                  cash spend {this.state.gold333.cash_spend} {this.state.my_currency}<br/>
-                  {this.state.gold333.profit > 0 ?
-                  <span style={{color: '#00ff00'}}>profit {this.state.gold333.profit}</span> :
-                  <span style={{color: 'red'}}>profit {this.state.gold333.profit}</span>
-                  }
-                </CardText>
-              </WalletCard>        
-            </Col>
-        </Row>
-        <Row>
-            <Col size={1}>
-              <WalletCard>
-                <CardText>
-                  Silver 800<br/>
-                  <hr/>
-                  value {this.state.silver800.value} {this.state.my_currency}<br/>
-                  cash spend {this.state.silver800.cash_spend} {this.state.my_currency}<br/>
-                  {this.state.silver800.profit > 0 ?
-                  <span style={{color: '#00ff00'}}>profit {this.state.silver800.profit} {this.state.my_currency}</span> :
-                  <span style={{color: 'red'}}>profit {this.state.silver800.profit} {this.state.my_currency}</span>
-                  }
-                </CardText>
-              </WalletCard>
-            </Col>
-            <Col size={1}>
-              <WalletCard>
-                <CardText>
-                  Silver 999<br/>
-                  <hr/>
-                  value {this.state.silver999.value} {this.state.my_currency}<br/>
-                  cash spend {this.state.silver999.cash_spend} {this.state.my_currency}<br/>
-                  {this.state.silver999.profit > 0 ?
-                  <span style={{color: '#00ff00'}}>profit {this.state.silver999.profit} {this.state.my_currency}</span> :
-                  <span style={{color: 'red'}}>profit {this.state.silver999.profit} {this.state.my_currency}</span>
-                  }
-                </CardText>
-              </WalletCard>        
-            </Col>
-            <Col size={1}>
-              <WalletCard>
-                <CardText>
-                  Cash<br/>
-                  <hr/>
-                  {this.state.my_cash.cash > 0 ?
-                  <span style={{color: '#00ff00'}}>Cash {this.state.my_cash.cash} {this.state.my_currency}</span> :
-                  <span style={{color: 'red'}}>Cash {this.state.my_cash.cash} {this.state.my_currency}</span>
-                  }
-                </CardText>
-              </WalletCard>
-            </Col>
-        </Row>
-        <Row>
-            <Col size={1}>
-              <WalletCard>
-                <CardText>
-                  Summary value of all resources<br/>
-                  {this.state.wallet.my_fortune > 0 ?
-                  <span style={{color: '#00ff00'}}>{this.state.wallet.my_fortune} {this.state.my_currency}</span> :
-                  <span style={{color: 'red'}}>{this.state.wallet.my_fortune} {this.state.my_currency}</span>
-                  }
-                </CardText>
-              </WalletCard>
-            </Col>
-        </Row>
+        <TableWrapper>
+          <Table columns={columns} data={data} />
+        </TableWrapper>
       </React.Fragment>
     )
   }
