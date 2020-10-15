@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
+import { Table } from '../Table'
 
-import { Row, Col } from './css/general'
-import { SubmitButton, Form, TextInput } from './css/form'
-import { ListTitle, CashItem, DelButton } from './css/cash'
+import { SubmitButton, Form, TextInput } from './css/cash'
+import { ListTitle, CashItem, DelButton, CashImage, TableWrapper } from './css/cash'
 import cash from '../../static/franc.jpg'
 
 import { 
@@ -98,52 +98,73 @@ export default class Cash extends Component {
     }
 
     render() {
+      const columns = [
+        {
+          Header: "My cash",
+          columns: [
+            {
+              Header: 'id',
+              accessor: 'id',
+            },
+            {
+              Header: 'cash',
+              accessor: 'cash',
+            },
+            {
+              Header: 'currency',
+              accessor: 'currency',
+            },
+            {
+              Header: 'save_date',
+              accessor: 'save_date',
+            },
+            {
+              Header: 'action',
+              accessor: 'delete',
+              Cell: ({ cell }) => (
+                <DelButton value={cell.row.values.name} onClick={(e) => this.onSubmitDel(e, cell.row.values.id)}>
+                  delete
+                </DelButton>)
+            }
+          ],
+        },
+      ]
+
+      const data = this.state.CashList.map((cash) => (
+            {
+              id: cash.id,
+              cash: cash.my_cash,
+              currency: cash.my_currency,
+              save_date: cash.save_date.slice(0, 10),
+              delete: "    "
+            }))
+
         return (
-            <Row>
-            <Col size={2}>
-                <ListTitle>List of your cash:</ListTitle>
-                {this.state.CashList.map((cash) => (
-                  <CashItem>
-                  <Row>
-                    <Col size={5}>
-                    <p style={{margin: '5px'}}>
-                       My cash: {cash.my_cash} {this.state.my_currency}<br/>
-                       Save date: {cash.save_date.slice(0, 10)}
-                    </p>
-                    </Col>
-                    <Col size={1}>
-                        <DelButton onClick={(e) => this.onSubmitDel(e, cash.id)}>Delete</DelButton>
-                    </Col>
-                    </Row>
-                  </CashItem>
-                ))}
-                </Col>
-            <Col size={3}>
-                <ListTitle>Add new cash</ListTitle>
+          <>
+            <ListTitle>List of your cash:</ListTitle>
+            <CashImage image={cash}></CashImage>
+            <TableWrapper>
+              <Table columns={columns} data={data} />
+            </TableWrapper>
+              <ListTitle>Add new cash</ListTitle>
                 <Form onSubmit={this.handleSubmitAdd}>
-                      <TextInput
-                        type='number'
-                        name='my_cash'
-                        placeholder='my cash'
-                        min="1"
-                        onChange={this.handleFormInput}
-                      />
-                    <br />
-                      <TextInput
-                        type='date'
-                        name='save_date'
-                        placeholder='save date'
-                        value={this.state.cash.save_date}
-                        onChange={this.handleFormInput}
-                      />
-                    <br />
-                    <SubmitButton type="submit" value="Add" />
-                  </Form>
-                  </Col>
-                  <Col size={4}>
-                    <img src={cash} alt='cash' style={{'max-width': '50%', height: 'auto', margin: '50px'}} />
-                  </Col>
-            </Row>
+                  <TextInput
+                    type='number'
+                    name='my_cash'
+                    placeholder='my cash'
+                    min="1"
+                    onChange={this.handleFormInput}
+                  />
+                  <TextInput
+                    type='date'
+                    name='save_date'
+                    placeholder='save date'
+                    value={this.state.cash.save_date}
+                    onChange={this.handleFormInput}
+                  />
+                  <SubmitButton type="submit" value="Add" />
+                </Form>
+          </>
         )
     }
 }

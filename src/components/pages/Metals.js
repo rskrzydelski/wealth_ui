@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
+import { Table } from '../Table'
 import gold_img from '../../static/gold_bars.jpg'
 import silver_img from '../../static/silver_bars.jpg'
 
@@ -14,9 +15,8 @@ import {
     refreshTokenUrl
 } from '../endpoints'
 
-import { Row, Col } from './css/general'
-import { SubmitButton, Form, TextInput, TextArea, SelectInput } from './css/form'
-import { ListTitle, MetalItem, Space, DelButton } from './css/metals'
+import { SubmitButton, Form, TextInput, TextArea, SelectInput } from './css/metals'
+import { ListTitle, TableWrapper, DelButton, MetalImage } from './css/metals'
 
 
 export default class Metals extends Component {
@@ -135,6 +135,11 @@ export default class Metals extends Component {
         this.setState({ resource: res })
     }
 
+    ble = (val) => {
+      console.log("sdasdsa")
+      console.log(val)
+    }
+
     render() {
         let options;
         let image;
@@ -144,45 +149,84 @@ export default class Metals extends Component {
                <option value="gold585">gold585</option>
                <option value="gold333">gold333</option>
              </React.Fragment>
-             image = <img src={gold_img} alt='gold' style={{'max-width': '50%', height: 'auto', margin: '50px'}} />
+             image = gold_img
         } else if (this.props.resource === 'silver') {
             options = <React.Fragment>
               <option value="silver999">silver999</option>
               <option value="silver800">silver800</option>
              </React.Fragment>
-             image = <img src={silver_img} alt='gold' style={{'max-width': '50%', height: 'auto', margin: '50px'}} />
+             image = silver_img
         }
 
+        const columns = [
+          {
+            Header: this.props.resource,
+            columns: [
+              {
+                Header: 'id',
+                accessor: 'id',
+              },
+              {
+                Header: 'resource',
+                accessor: 'name',
+              },
+              {
+                Header: 'amount',
+                accessor: 'amount',
+              },
+              {
+                Header: 'unit',
+                accessor: 'unit',
+              },
+              {
+                Header: 'bought price',
+                accessor: 'bought_price',
+              },
+              {
+                Header: 'date of bought',
+                accessor: 'date_of_bought',
+              },
+              {
+                Header: 'action',
+                accessor: 'delete',
+                Cell: ({ cell }) => (
+                  <DelButton value={cell.row.values.name} onClick={(e) => this.onSubmitDel(e, cell.row.values.id)}>
+                    delete
+                  </DelButton>)
+              }
+            ],
+          },
+        ]
+
+        const data = this.state.MetalList.map((metal) => (
+              {
+                id: metal.id,
+                name: metal.name,
+                amount: metal.amount,
+                unit: metal.unit,
+                bought_price: metal.bought_price,
+                date_of_bought: metal.date_of_bought.slice(0, 10),
+                delete: "    "
+              }))
+
         return (
-            <Row>
-            <Col size={2}>
-                <ListTitle>List of your {this.props.resource}:</ListTitle>
-                {this.state.MetalList.map((metal) => (
-                  <MetalItem>
-                  <Row>
-                    <Col size={5}>
-                    <p style={{margin: '5px'}}>
-                      {metal.name}<br/>
-                      Amount: {metal.amount} {metal.unit}<br/>
-                      Bought price: {metal.bought_price} {this.state.my_currency}<br/>
-                      Date of bought: {metal.date_of_bought.slice(0, 10)}
-                    </p>
-                    </Col>
-                    <Col size={1}>
-                        <DelButton onClick={(e) => this.onSubmitDel(e, metal.id)}>Delete</DelButton>
-                    </Col>
-                    </Row>
-                  </MetalItem>
-                ))}
-                <Space></Space>
-                </Col>
-            <Col size={3}>
+          <>
+            <ListTitle>List of your {this.props.resource}:</ListTitle>
+            <MetalImage image={image}></MetalImage>
+            <TableWrapper>
+              <Table columns={columns} data={data} />
+            </TableWrapper>
+
                 <ListTitle>Add new metal</ListTitle>
                 <Form onSubmit={(e) => this.onSubmitAdd(e, this.state)}>
                       <SelectInput id="resource_name" name="name" onChange={this.handleFormInput}>
                         {options}
                       </SelectInput>
-                    <br />
+                      <SelectInput id="resource_unit" name="unit" onChange={this.handleFormInput}>
+                        <option value="oz">ounce</option>
+                        <option value="g">gram</option>
+                        <option value="kg">kilogram</option>
+                      </SelectInput>
                       <TextInput
                         type='number'
                         name='bought_price'
@@ -190,7 +234,6 @@ export default class Metals extends Component {
                         min="1"
                         onChange={this.handleFormInput}
                       />
-                    <br />
                       <TextInput
                         type='number'
                         name='amount'
@@ -198,13 +241,6 @@ export default class Metals extends Component {
                         min="1"
                         onChange={this.handleFormInput}
                       />
-                    <br />
-                    <SelectInput id="resource_unit" name="unit" onChange={this.handleFormInput}>
-                        <option value="oz">ounce</option>
-                        <option value="g">gram</option>
-                        <option value="kg">kilogram</option>
-                      </SelectInput>
-                    <br />
                       <TextInput
                         type='date'
                         name='date_of_bought'
@@ -212,23 +248,16 @@ export default class Metals extends Component {
                         value={this.state.resource.date_of_bought}
                         onChange={this.handleFormInput}
                       />
-                    <br />
                       <TextArea
                         name="description"
                         rows="4"
                         cols="50"
+                        placeholder="description"
                         onChange={this.handleFormInput}
-                      >
-                        description
-                      </TextArea>
-                    <br />
+                      ></TextArea>
                     <SubmitButton type="submit" value="Add" />
                   </Form>
-                  </Col>
-                  <Col size={4}>
-                    {image}
-                  </Col>
-            </Row>
+          </>
         )
     }
 }

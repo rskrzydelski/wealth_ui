@@ -4,8 +4,7 @@ import { loginUrl } from '../endpoints'
 import { post } from '../api'
 import Welcome from '../Welcome'
 
-import { AuthWrapper } from './css/auth'
-import { SubmitButton, Form, TextInput } from './css/form'
+import { AuthWrapper, SubmitButton, Form, TextInput } from './css/auth'
 
 export default class Login extends Component {
     constructor (props) {

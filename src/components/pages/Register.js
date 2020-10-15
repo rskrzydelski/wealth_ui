@@ -5,7 +5,7 @@ import { registerUrl } from '../endpoints'
 import { post } from '../api'
 
 import { AuthWrapper } from './css/auth'
-import { SubmitButton, Form, TextInput, SelectInput } from './css/form'
+import { SubmitButton, Form, TextInput, SelectInput } from './css/auth'
 
 export default class Logout extends Component {
     constructor (props) {
