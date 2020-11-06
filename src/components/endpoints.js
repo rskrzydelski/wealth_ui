@@ -42,4 +42,4 @@ export const metalsGold333Url = `${serverUrl}${apiEntry}resources/metals?name=go
 export const metalsSilver999Url = `${serverUrl}${apiEntry}resources/metals?name=silver999`
 export const metalsSilver800Url = `${serverUrl}${apiEntry}resources/metals?name=silver800`
 export const cashUrl = `${serverUrl}${apiEntry}resources/cash`
-
+export const cryptoUrl = `${serverUrl}${apiEntry}resources/crypto`

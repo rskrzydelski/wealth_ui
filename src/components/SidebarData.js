@@ -29,6 +29,10 @@ export const AuthMenuData = [
     path: '/cash'
   },
   {
+    title: 'Crypto',
+    path: '/crypto'
+  },
+  {
     title: 'My Account',
     path: '/my_account'
   },

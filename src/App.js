@@ -7,6 +7,7 @@ import Dashboard from './components/pages/Dashboard'
 import Gold from './components/pages/Gold'
 import Silver from './components/pages/Silver'
 import Cash from './components/pages/Cash'
+import Crypto from './components/pages/Crypto'
 import Login from './components/pages/Login'
 import Logout from './components/pages/Logout'
 import Register from './components/pages/Register'
@@ -48,6 +49,7 @@ class App extends Component {
               <PrivateRoute exact path='/gold' isAuth={this.state.isAuth} component={Gold} />
               <PrivateRoute exact path='/silver' isAuth={this.state.isAuth} component={Silver} />
               <PrivateRoute exact path='/cash' isAuth={this.state.isAuth} component={Cash} />
+              <PrivateRoute exact path='/crypto' isAuth={this.state.isAuth} component={Crypto} />
               <PrivateRoute exact path='/my_account' isAuth={this.state.isAuth} component={Account} />
             </Switch>
           </Wrapper>
