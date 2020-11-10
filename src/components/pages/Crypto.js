@@ -186,7 +186,7 @@ export default class Crypto extends Component {
                         type='number'
                         name='amount'
                         placeholder='amount'
-                        min="1"
+                        step="0.0000000001"
                         onChange={this.handleFormInput}
                       />
                       <TextInput

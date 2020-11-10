@@ -25,13 +25,28 @@ export const gold333kgUrl = `${serverUrl}${apiEntry}market?name=gold333&unit=kg`
 export const silver999ozUrl = `${serverUrl}${apiEntry}market?name=silver999&unit=oz`
 export const silver800gUrl = `${serverUrl}${apiEntry}market?name=silver800&unit=g`
 
-// wallet
+// wallets
+// metal wallet
 export const walletGold999Url = `${serverUrl}${apiEntry}wallet/metals/gold999`
 export const walletGold585Url = `${serverUrl}${apiEntry}wallet/metals/gold585`
 export const walletGold333Url = `${serverUrl}${apiEntry}wallet/metals/gold333`
 export const walletSilver999Url = `${serverUrl}${apiEntry}wallet/metals/silver999`
 export const walletSilver800Url = `${serverUrl}${apiEntry}wallet/metals/silver800`
+
+// crypto wallet
+export const walletBtcUrl = `${serverUrl}${apiEntry}wallet/crypto/btc`
+export const walletBchUrl = `${serverUrl}${apiEntry}wallet/crypto/bch`
+export const walletEthUrl = `${serverUrl}${apiEntry}wallet/crypto/eth`
+export const walletXrpUrl = `${serverUrl}${apiEntry}wallet/crypto/xrp`
+export const walletLtcUrl = `${serverUrl}${apiEntry}wallet/crypto/ltc`
+export const walletDotUrl = `${serverUrl}${apiEntry}wallet/crypto/dot`
+export const walletNeoUrl = `${serverUrl}${apiEntry}wallet/crypto/neo`
+export const walletThetaUrl = `${serverUrl}${apiEntry}wallet/crypto/theta`
+
+// cash wallet
 export const walletCashUrl = `${serverUrl}${apiEntry}wallet/cash`
+
+// all wallets
 export const walletUrl = `${serverUrl}${apiEntry}wallet`
 
 // resources
