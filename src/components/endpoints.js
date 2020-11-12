@@ -9,21 +9,33 @@ export const refreshTokenUrl = `${serverUrl}${apiEntry}auth/jwt/refresh/`
 export const registerUrl = `${serverUrl}${apiEntry}auth/users/`
 export const accountUrl = `${serverUrl}${apiEntry}auth/users/me/`
 
-// market prices
-export const gold999ozUrl = `${serverUrl}${apiEntry}market?name=gold999&unit=oz`
-export const gold999gUrl = `${serverUrl}${apiEntry}market?name=gold999&unit=g`
-export const gold999kgUrl = `${serverUrl}${apiEntry}market?name=gold999&unit=kg`
+// metals market prices
+export const marketGold999ozUrl = `${serverUrl}${apiEntry}market/metals?name=gold999&unit=oz`
+export const marketGold999gUrl = `${serverUrl}${apiEntry}market/metals?name=gold999&unit=g`
+export const marketGold999kgUrl = `${serverUrl}${apiEntry}market/metals?name=gold999&unit=kg`
 
-export const gold585ozUrl = `${serverUrl}${apiEntry}market?name=gold585&unit=oz`
-export const gold585gUrl = `${serverUrl}${apiEntry}market?name=gold585&unit=g`
-export const gold585kgUrl = `${serverUrl}${apiEntry}market?name=gold585&unit=kg`
+export const marketGold585ozUrl = `${serverUrl}${apiEntry}market/metals?name=gold585&unit=oz`
+export const marketGold585gUrl = `${serverUrl}${apiEntry}market/metals?name=gold585&unit=g`
+export const marketGold585kgUrl = `${serverUrl}${apiEntry}market/metals?name=gold585&unit=kg`
 
-export const gold333ozUrl = `${serverUrl}${apiEntry}market?name=gold333&unit=oz`
-export const gold333gUrl = `${serverUrl}${apiEntry}market?name=gold333&unit=g`
-export const gold333kgUrl = `${serverUrl}${apiEntry}market?name=gold333&unit=kg`
+export const marketGold333ozUrl = `${serverUrl}${apiEntry}market/metals?name=gold333&unit=oz`
+export const marketGold333gUrl = `${serverUrl}${apiEntry}market/metals?name=gold333&unit=g`
+export const marketGold333kgUrl = `${serverUrl}${apiEntry}market/metals?name=gold333&unit=kg`
 
-export const silver999ozUrl = `${serverUrl}${apiEntry}market?name=silver999&unit=oz`
-export const silver800gUrl = `${serverUrl}${apiEntry}market?name=silver800&unit=g`
+export const marketSilver999ozUrl = `${serverUrl}${apiEntry}market/metals?name=silver999&unit=oz`
+export const marketSilver800gUrl = `${serverUrl}${apiEntry}market/metals?name=silver800&unit=g`
+
+// crypto market prices
+export const marketBtcUrl = `${serverUrl}${apiEntry}market/cryptos?name=btc`
+export const marketBchUrl = `${serverUrl}${apiEntry}market/cryptos?name=bch`
+export const marketEthUrl = `${serverUrl}${apiEntry}market/cryptos?name=eth`
+export const marketXrpUrl = `${serverUrl}${apiEntry}market/cryptos?name=xrp`
+export const marketLtcUrl = `${serverUrl}${apiEntry}market/cryptos?name=ltc`
+export const marketDotUrl = `${serverUrl}${apiEntry}market/cryptos?name=dot`
+export const marketNeoUrl = `${serverUrl}${apiEntry}market/cryptos?name=neo`
+export const marketFlmUrl = `${serverUrl}${apiEntry}market/cryptos?name=flm`
+export const marketThetaUrl = `${serverUrl}${apiEntry}market/cryptos?name=theta`
+
 
 // wallets
 // metal wallet

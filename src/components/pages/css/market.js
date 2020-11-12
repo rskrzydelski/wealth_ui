@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { GiGoldBar, GiBigDiamondRing, GiFlamingo } from 'react-icons/gi'
 import { FaEthereum } from 'react-icons/fa'
-import { SiBitcoin, SiNeovim } from 'react-icons/si'
+import { SiBitcoin, SiLitecoin } from 'react-icons/si'
 
 export const MarketContainer = styled.div`
   alignt-text: center;
@@ -78,8 +78,7 @@ export const EthIcon = styled(FaEthereum)`
     float: left;
 `
 
-export const NeoIcon = styled(SiNeovim)`
-    color: green;
+export const LtcIcon = styled(SiLitecoin)`
     float: left;
 `
 

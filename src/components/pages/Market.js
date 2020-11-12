@@ -1,9 +1,21 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
 
-import { gold999ozUrl, gold585gUrl, silver999ozUrl, silver800gUrl, accountUrl, refreshTokenUrl } from '../endpoints'
+import { 
+  marketGold999ozUrl,
+  marketGold585gUrl,
+  marketSilver999ozUrl,
+  marketSilver800gUrl,
+  marketBtcUrl,
+  marketEthUrl,
+  marketFlmUrl,
+  marketLtcUrl,
+  accountUrl,
+  refreshTokenUrl
+} from '../endpoints'
 
-import { MarketContainer, MarketItem, MarketText, TextSpan, Gold999Icon, Gold585Icon, Silver800Icon, Silver999Icon, FlmIcon, EthIcon, NeoIcon, BtnIcon } from './css/market'
+import { MarketContainer, MarketItem, MarketText, TextSpan } from './css/market'
+import { Gold999Icon, Gold585Icon, Silver800Icon, Silver999Icon, FlmIcon, EthIcon, LtcIcon, BtnIcon } from './css/market'
 
 export default class Market extends Component {
     constructor (props) {
@@ -13,7 +25,11 @@ export default class Market extends Component {
             gold999oz: '',
             gold585g: '',
             silver999oz: '',
-            silver800g: ''
+            silver800g: '',
+            btc: '',
+            eth: '',
+            flm: '',
+            ltc: '',
           },
             my_currency: ''
         }
@@ -38,17 +54,25 @@ export default class Market extends Component {
 
   getMarketData = async () => {
     try {
-      const gold999Promise = Axios(gold999ozUrl, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
-      const gold585Promise = Axios(gold585gUrl, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
-      const silver999Promise = Axios(silver999ozUrl, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
-      const silver800Promise = Axios(silver800gUrl, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
+      const gold999Promise = Axios(marketGold999ozUrl, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
+      const gold585Promise = Axios(marketGold585gUrl, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
+      const silver999Promise = Axios(marketSilver999ozUrl, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
+      const silver800Promise = Axios(marketSilver800gUrl, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
+
+      const BtcPromise = Axios(marketBtcUrl, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
+      const EthPromise = Axios(marketEthUrl, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
+      const LtcPromise = Axios(marketLtcUrl, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
   
-      const res = await Promise.all([gold999Promise, gold585Promise, silver999Promise, silver800Promise])
+      const res = await Promise.all([gold999Promise, gold585Promise, silver999Promise, silver800Promise, BtcPromise, EthPromise, LtcPromise])
       var market = {...this.state.market}
       market.gold999oz = res[0].data.price
       market.gold585g = res[1].data.price
       market.silver999oz = res[2].data.price
       market.silver800g = res[3].data.price
+      market.btc = res[4].data.price
+      market.eth = res[5].data.price
+      market.ltc = res[6].data.price
+
       this.setState({market})
     } catch (error) {
       console.log(error)
@@ -105,15 +129,15 @@ export default class Market extends Component {
             <MarketItem>
                 <BtnIcon />
                 <MarketText>
-                  <TextSpan>BTH: </TextSpan>
-                  <TextSpan>40000 {this.state.my_currency}</TextSpan>
+                  <TextSpan>BTC: </TextSpan>
+                  <TextSpan>{this.state.market.btc} {this.state.my_currency}</TextSpan>
                 </MarketText>
             </MarketItem>
             <MarketItem>
                 <EthIcon />
                 <MarketText>
-                  <TextSpan>EHT: </TextSpan>
-                  <TextSpan>1670 {this.state.my_currency}</TextSpan>
+                  <TextSpan>ETH: </TextSpan>
+                  <TextSpan>{this.state.market.eth} {this.state.my_currency}</TextSpan>
                 </MarketText>
             </MarketItem>
             <MarketItem>
@@ -124,10 +148,10 @@ export default class Market extends Component {
                 </MarketText>
             </MarketItem>
             <MarketItem>
-                <NeoIcon />
+                <LtcIcon />
                 <MarketText>
-                  <TextSpan>NEO: </TextSpan>
-                  <TextSpan>80 {this.state.my_currency}</TextSpan>
+                  <TextSpan>LTC: </TextSpan>
+                  <TextSpan>{this.state.market.ltc} {this.state.my_currency}</TextSpan>
                 </MarketText>
             </MarketItem>
           </MarketContainer>
