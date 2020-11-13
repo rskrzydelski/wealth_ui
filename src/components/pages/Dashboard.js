@@ -16,6 +16,7 @@ import {
     walletDotUrl,
     walletNeoUrl,
     walletThetaUrl,
+    walletFlmUrl,
     walletCashUrl,
     walletUrl,
     accountUrl,
@@ -42,8 +43,8 @@ export default class Dashboard extends Component {
         ltc: {value: '', cash_spend: '', profit: ''},
         dot: {value: '', cash_spend: '', profit: ''},
         neo: {value: '', cash_spend: '', profit: ''},
-        // flm: {value: '', cash_spend: '', profit: ''},
         theta: {value: '', cash_spend: '', profit: ''},
+        flm: {value: '', cash_spend: '', profit: ''},
 
         my_cash: {my_currency: '', cash: ''},
         wallet: {title: '', my_fortune: ''},
@@ -84,13 +85,14 @@ export default class Dashboard extends Component {
       const dotWalletPromise = Axios(walletDotUrl, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
       const neoWalletPromise = Axios(walletNeoUrl, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
       const thetaWalletPromise = Axios(walletThetaUrl, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
+      const flmWalletPromise = Axios(walletFlmUrl, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
 
       const cashWalletPromise = Axios(walletCashUrl, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
       const walletPromise = Axios(walletUrl, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
 
       const res = await Promise.all([
         gold999WalletPromise, gold585WalletPromise, gold333WalletPromise, silver999WalletPromise, silver800WalletPromise,
-        btcWalletPromise, bchWalletPromise, ethWalletPromise, xrpWalletPromise, ltcWalletPromise, dotWalletPromise, neoWalletPromise, thetaWalletPromise,
+        btcWalletPromise, bchWalletPromise, ethWalletPromise, xrpWalletPromise, ltcWalletPromise, dotWalletPromise, neoWalletPromise, thetaWalletPromise, flmWalletPromise,
         cashWalletPromise, 
         walletPromise])
 
@@ -174,14 +176,20 @@ export default class Dashboard extends Component {
       theta.profit = res[12].data.profit
       this.setState({theta})
 
+      var flm = {...this.state.flm}
+      flm.value = res[13].data.crypto_value
+      flm.cash_spend = res[13].data.cash_spend
+      flm.profit = res[13].data.profit
+      this.setState({flm})
+
       var my_cash = {...this.state.cash}
-      my_cash.my_currency = res[13].data.my_currency
-      my_cash.cash = res[13].data.cash
+      my_cash.my_currency = res[14].data.my_currency
+      my_cash.cash = res[14].data.cash
       this.setState({my_cash})
 
       var wallet = {...this.state.wallet}
-      wallet.title = res[14].data.title
-      wallet.my_fortune = res[14].data.my_fortune
+      wallet.title = res[15].data.title
+      wallet.my_fortune = res[15].data.my_fortune
       this.setState({wallet})
     } catch (error) {
       if (error.response.status === 401) {
@@ -304,9 +312,9 @@ export default class Dashboard extends Component {
       },
       {
         name: "FLM",
-        value: <Value>{0 + ' ' + this.state.my_currency}</Value>,
-        cash: <Spend>{0}</Spend>,
-        profit: <Profit profit={0}>0</Profit>
+        value: <Value>{this.state.flm.value + ' ' + this.state.my_currency}</Value>,
+        cash: <Spend>{this.state.flm.cash_spend + ' ' + this.state.my_currency}</Spend>,
+        profit: <Profit profit={this.state.flm.profit}>{this.state.flm.profit + ' ' + this.state.my_currency}</Profit>
       },
       {
         name: "THETA",

@@ -53,6 +53,7 @@ export const walletXrpUrl = `${serverUrl}${apiEntry}wallet/crypto/xrp`
 export const walletLtcUrl = `${serverUrl}${apiEntry}wallet/crypto/ltc`
 export const walletDotUrl = `${serverUrl}${apiEntry}wallet/crypto/dot`
 export const walletNeoUrl = `${serverUrl}${apiEntry}wallet/crypto/neo`
+export const walletFlmUrl = `${serverUrl}${apiEntry}wallet/crypto/flm`
 export const walletThetaUrl = `${serverUrl}${apiEntry}wallet/crypto/theta`
 
 // cash wallet

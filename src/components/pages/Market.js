@@ -62,8 +62,9 @@ export default class Market extends Component {
       const BtcPromise = Axios(marketBtcUrl, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
       const EthPromise = Axios(marketEthUrl, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
       const LtcPromise = Axios(marketLtcUrl, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
-  
-      const res = await Promise.all([gold999Promise, gold585Promise, silver999Promise, silver800Promise, BtcPromise, EthPromise, LtcPromise])
+      const FlmPromise = Axios(marketFlmUrl, {headers: {authorization: 'JWT ' + localStorage.getItem('access')}})
+
+      const res = await Promise.all([gold999Promise, gold585Promise, silver999Promise, silver800Promise, BtcPromise, EthPromise, LtcPromise, FlmPromise])
       var market = {...this.state.market}
       market.gold999oz = res[0].data.price
       market.gold585g = res[1].data.price
@@ -72,6 +73,7 @@ export default class Market extends Component {
       market.btc = res[4].data.price
       market.eth = res[5].data.price
       market.ltc = res[6].data.price
+      market.flm = res[7].data.price
 
       this.setState({market})
     } catch (error) {
@@ -144,7 +146,7 @@ export default class Market extends Component {
                 <FlmIcon />
                 <MarketText>
                   <TextSpan>FLM: </TextSpan>
-                  <TextSpan>10 {this.state.my_currency}</TextSpan>
+                  <TextSpan>{this.state.market.flm} {this.state.my_currency}</TextSpan>
                 </MarketText>
             </MarketItem>
             <MarketItem>

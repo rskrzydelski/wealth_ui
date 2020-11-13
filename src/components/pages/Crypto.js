@@ -173,6 +173,7 @@ export default class Crypto extends Component {
                   <option value="ltc">litecoin</option>
                   <option value="dot">polkadot</option>
                   <option value="neo">neo</option>
+                  <option value="flm">flamingo</option>
                   <option value="theta">theta</option>
                 </SelectInput>
                 <TextInput
