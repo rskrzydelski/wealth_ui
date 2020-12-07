@@ -14,10 +14,29 @@ export const Navbar = styled.div`
   }
 `
 
+export const StyledBrand = styled.h1`
+    z-index: 1;
+    position: absolute;
+    color: white;
+    margin-left: 12px;
+    text-align: left;
+    font-family: 'Indie Flower', cursive;
+    font-size: 18px;
+    line-height: 60px;
+    left: 0;
+    @media (min-width: 768px) {
+      font-size: 24px;
+      line-height: 70px;
+      margin-left: 20px;
+    }
+    &:hover {
+      color: gold;
+    }
+`
+
 export const Hamburger = styled(Link)`
-  margin-right: 2rem;
   color: gold;
-  font-size: 2rem;
+  font-size: 1.2rem;
   text-decoration: none;
   margin: 20px 15px 10px 10px;
   @media (min-width: 768px) {
@@ -38,6 +57,7 @@ export const NavMenu = styled.nav`
   @media (min-width: 768px) {
     background-color: black;
     height: auto;
+    position: absolute;
     top: 0;
   }
 `
@@ -79,22 +99,3 @@ export const NavMenuItem = styled.li`
     }
 `
 
-export const StyledBrand = styled.h1`
-    z-index: 1;
-    position: absolute;
-    color: white;
-    margin: 35px 0px 0px 20px;
-    text-align: left;
-    font-family: 'Indie Flower', cursive;
-    font-size: 18px;
-    height: 100%;
-    left: 0;
-    @media (min-width: 768px) {
-      font-size: 24px;
-      margin: 45px 0px 0px 25px;
-
-    }
-    &:hover {
-      color: gold;
-    }
-`

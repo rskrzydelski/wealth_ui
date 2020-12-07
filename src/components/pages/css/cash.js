@@ -23,10 +23,11 @@ export const CashImage = styled.div`
 `
 
 export const DelButton = styled.button`
+  display: block;
   cursor: pointer;
-  padding: 2px 5px;
-  border-radius: 10px;
-  background: red;
+  font-size: 12px;
+  color: white;
+  background: #111519;
 `
 
 export const ListTitle = styled.h1`
