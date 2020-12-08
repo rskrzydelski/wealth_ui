@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Axios from 'axios'
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import './App.css'
 import Bottom from './components/Bottom'
@@ -12,7 +13,7 @@ import Login from './components/pages/Login'
 import Logout from './components/pages/Logout'
 import Register from './components/pages/Register'
 import Account from './components/pages/Account'
-
+import { verifyTokenUrl } from './components/endpoints'
 import { MainWrapper, Wrapper } from './components/pages/css/app'
 
 const PrivateRoute = ({ component: Component, isAuth }) => (
@@ -23,9 +24,39 @@ const PrivateRoute = ({ component: Component, isAuth }) => (
 )
 
 class App extends Component {
-  state = {
-    isAuth: false
+  constructor (props) {
+    super(props)
+    let checkAuthAfterRefresh;
+    if (localStorage.getItem("access") !== null) {
+      (async () => {
+        checkAuthAfterRefresh = await this.verifyToken(localStorage.getItem("access"))
+        if (checkAuthAfterRefresh === true) {
+          this.isAuthenticated(true)
+        } else {
+          localStorage.clear()
+          this.isAuthenticated(false)
+        }
+      })()
+    }
+    this.state = {
+      isAuth: false
+    }
   }
+
+  verifyToken = async (token) => {
+    try {
+        const res = await Axios.post(verifyTokenUrl, {token: token})
+        if (res.status === 200) {
+          return true
+        }
+    } catch (error) {
+        if (error.response.status === 401) {
+           console.log("401 unauthorized")
+          }
+        return false
+    }
+  }
+
   isAuthenticated = (isAuth) => {
     if (isAuth) {
       this.setState({isAuth: true})
@@ -41,7 +72,7 @@ class App extends Component {
           <Wrapper>
             <NavBar isAuth={this.state.isAuth} />
             <Switch>
-              <Route path='/login' render={ props => (<Login isAuthenticated={this.isAuthenticated} {...props}  /> )} />
+              <Route path='/login' render={ props => (<Login isAuthenticated={this.isAuthenticated} isAuth={this.state.isAuth} {...props}  /> )} />
               <Route path='/logout' render={ props => (<Logout isAuthenticated={this.isAuthenticated}/> )} />
               <Route path='/register' render={(props) => (<Register {...props}/>)} />
 

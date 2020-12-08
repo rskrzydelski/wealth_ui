@@ -1,11 +1,12 @@
-// const serverUrl = 'http://127.0.0.1:8000'
-const serverUrl = 'http://192.168.1.3'
+const serverUrl = 'http://127.0.0.1:8000'
+// const serverUrl = 'http://192.168.1.3'
 
 const apiEntry = '/api/v1/'
 
 // authentication endpoints
 export const loginUrl = `${serverUrl}${apiEntry}auth/jwt/create/`
 export const refreshTokenUrl = `${serverUrl}${apiEntry}auth/jwt/refresh/`
+export const verifyTokenUrl = `${serverUrl}${apiEntry}auth/jwt/verify/`
 export const registerUrl = `${serverUrl}${apiEntry}auth/users/`
 export const accountUrl = `${serverUrl}${apiEntry}auth/users/me/`
 

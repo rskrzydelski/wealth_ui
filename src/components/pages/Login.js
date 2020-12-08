@@ -14,6 +14,13 @@ export default class Login extends Component {
       }
     }
 
+    componentDidUpdate() {
+      if (this.props.isAuth === true) {
+        const { history } = this.props
+        history.push('/')
+      }
+    }
+
     Authenticate = (data) => {
       const { history } = this.props
       localStorage.setItem('access', data.access)
