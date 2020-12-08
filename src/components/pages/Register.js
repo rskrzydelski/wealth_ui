@@ -5,15 +5,16 @@ import { registerUrl } from '../endpoints'
 import { post } from '../api'
 
 import { AuthWrapper } from './css/auth'
-import { SubmitButton, Form, TextInput, SelectInput } from './css/auth'
+import { SubmitButton, Form, TextInput, SelectInput, LoginFailedMsg, LoginFailedMsgContainer } from './css/auth'
 
 export default class Logout extends Component {
     constructor (props) {
       super(props)
       this.state = {
-        data: { username: '', email: '', password: '', re_password: '', my_currency: '' }
+        data: { username: '', email: '', password: '', re_password: '', my_currency: '' },
+        show_warrning: false,
+        warrning: ""
       }
-      console.log(this.state)
     }
 
     GoToLogin = (data) => {
@@ -25,8 +26,15 @@ export default class Logout extends Component {
       post(
           registerUrl,
           {username: username, email: email, password: password, re_password: re_password, my_currency: my_currency},
-          this.GoToLogin
+          this.GoToLogin,
+          this.handleNoAuth
           )
+    }
+
+    handleNoAuth = (error) => {
+      this.setState({show_warrning: true})
+      this.setState({warrning: error.response.statusText})
+      setTimeout(() => {this.setState({show_warrning: false})},5000)
     }
 
     handleChange = (event) => {
@@ -82,6 +90,9 @@ export default class Logout extends Component {
                     <option value="EUR">EUR</option>
                   </SelectInput>
                   <SubmitButton type="submit" value="Register" />
+                  <LoginFailedMsgContainer show={this.state.show_warrning}>
+                    <LoginFailedMsg>Registration failed. {this.state.warrning}</LoginFailedMsg>
+                  </LoginFailedMsgContainer>
               </Form>
               <Welcome />
             </AuthWrapper>

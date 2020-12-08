@@ -4,13 +4,15 @@ import { loginUrl } from '../endpoints'
 import { post } from '../api'
 import Welcome from '../Welcome'
 
-import { AuthWrapper, SubmitButton, Form, TextInput } from './css/auth'
+import { AuthWrapper, SubmitButton, Form, TextInput, LoginFailedMsg, LoginFailedMsgContainer } from './css/auth'
 
 export default class Login extends Component {
     constructor (props) {
       super(props)
       this.state = {
-        credentials: { email: '', password: '' }
+        credentials: { email: '', password: '' },
+        show_warrning: false,
+        warrning: "",
       }
     }
 
@@ -29,8 +31,14 @@ export default class Login extends Component {
       history.push('/')
     }
 
+    handleNoAuth = (error) => {
+      this.setState({show_warrning: true})
+      this.setState({warrning: error.response.statusText})
+      setTimeout(() => {this.setState({show_warrning: false})},5000)
+    }
+
     loginUser = (email, password) => {
-      post(loginUrl, {email: email, password: password}, this.Authenticate)
+      post(loginUrl, {email: email, password: password}, this.Authenticate, this.handleNoAuth)
     }
 
     handleChange = (event) => {
@@ -66,6 +74,9 @@ export default class Login extends Component {
                   onChange={this.handleChange}
                 />
               <SubmitButton type="submit" value="Login" />
+              <LoginFailedMsgContainer show={this.state.show_warrning}>
+                <LoginFailedMsg>Wrong username or password. Try again or click forgot password. {this.state.warrning}</LoginFailedMsg>
+              </LoginFailedMsgContainer>
             </Form>
             <Welcome />
           </AuthWrapper>

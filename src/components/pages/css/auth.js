@@ -81,3 +81,20 @@ export const TextArea = styled.textarea`
     color: gold;
   }
 `
+
+export const LoginFailedMsgContainer = styled.div`
+  transition: opacity 600ms, visibility 600ms;
+  visibility: ${props => props.show ? 'visible' : 'hidden'};
+  opacity: ${props => props.show ? '1' : '0'};
+  margin: 1px 10px;
+  border: 1px solid red;
+  border-radius: 10px;
+`
+
+export const LoginFailedMsg = styled.p`
+  padding: 0 2px;
+  text-align: center;
+  font-size: 12px;
+  color: red;
+  letter-spacing: 1px;
+`

@@ -15,14 +15,14 @@ export const get = (url, callback) => {
     })
 }
 
-export const post = (url, data, callback) => {
+export const post = (url, data, callback, error_clb) => {
   Axios.post(url, data)
     .then((res) => {
       if (res.status === 200 || res.status === 201) {
         callback(res.data)
-      } else {
-        console.log(res.status)
       }
+    }).catch(err => {
+      error_clb(err)
     })
 }
 
