@@ -1,5 +1,8 @@
-const serverUrl = 'http://127.0.0.1:8000'
-// const serverUrl = 'http://192.168.1.3'
+// for local dev
+//const serverUrl = 'http://127.0.0.1:8000'
+
+// for production
+const serverUrl = ''
 
 const apiEntry = '/api/v1/'
 
